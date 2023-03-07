@@ -31,11 +31,11 @@ const LoginScreen = ({navigation}) => {
   const handleSubmitPress = () => {
     setErrortext('');
     if (!userEmail) {
-      alert('Please fill Email');
+      alert('Please Fill Email');
       return;
     }
     if (!userPassword) {
-      alert('Please fill Password');
+      alert('Please Fill Password');
       return;
     }
     setLoading(true);
@@ -93,7 +93,7 @@ const LoginScreen = ({navigation}) => {
           <KeyboardAvoidingView enabled>
             <View style={{alignItems: 'center'}}>
               <Image
-                source={require('../Image/aboutreact.png')}
+                source={require('../Image/logo.png')}
                 style={{
                   width: '90%',
                   height: 100,
@@ -151,17 +151,11 @@ const LoginScreen = ({navigation}) => {
               <Text style={styles.buttonTextStyle}>LOGIN</Text>
             </TouchableOpacity>
             <Text
-              style={styles.registerTextStyle}
-              onPress={() => navigation.navigate('RegisterScreen')}>
-              New Here ? Register
+              style={styles.registerTextStyle}>
+              New Here? <Text style={styles.registerLinkStyle} onPress={() => navigation.navigate('RegisterScreen')}>Register</Text>
             </Text>
 
-            <Button
-              onPress={() => {
-                console.log('You tapped the button!');
-              }}
-              title="Press Me"
-            />
+
 
           </KeyboardAvoidingView>
         </View>
@@ -176,7 +170,7 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#307ecc',
+    backgroundColor: '#f9f6fd',
     alignContent: 'center',
   },
   SectionStyle: {
@@ -188,11 +182,11 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#692ad5',
     borderWidth: 0,
     color: '#FFFFFF',
-    borderColor: '#7DE24E',
-    height: 40,
+    borderColor: '#692ad5',
+    height: 50,
     alignItems: 'center',
     borderRadius: 30,
     marginLeft: 35,
@@ -203,28 +197,33 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#FFFFFF',
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 20,
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: 'black',
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: '#dadae8',
+    borderColor: '#692ad5',
   },
   registerTextStyle: {
-    color: '#FFFFFF',
+    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 18,
     alignSelf: 'center',
     padding: 10,
   },
+  registerLinkStyle: {
+      color: '#692ad5',
+      textDecorationLine: 'underline',
+    },
   errorTextStyle: {
     color: 'red',
     textAlign: 'center',
     fontSize: 14,
+    fontWeight: "bold",
   },
 });
