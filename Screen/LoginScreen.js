@@ -66,6 +66,8 @@ const LoginScreen = ({navigation}) => {
         if (responseJson.status === 'success') {
           AsyncStorage.setItem('user_id', responseJson.data.email);
           AsyncStorage.setItem('user_name', responseJson.data.name);
+          AsyncStorage.setItem('age', responseJson.data.age);
+          AsyncStorage.setItem('password', responseJson.data.password);
           console.log(responseJson.data.email);
           console.log(responseJson.data.name);
           navigation.replace('DrawerNavigationRoutes');

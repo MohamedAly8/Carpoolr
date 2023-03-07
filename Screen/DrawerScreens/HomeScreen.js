@@ -16,10 +16,6 @@ import React, { useState, useEffect } from 'react';
        }
      }
 
-
-    console.log(GOOGLE_MAPS_API_KEY);
-
-
      getUsername();
    }, []);
 

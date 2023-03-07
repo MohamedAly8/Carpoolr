@@ -1,50 +1,119 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
-
-// Import React and Component
-import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_URL} from "@env";
+import React, { useState, useEffect } from 'react';
 
 const SettingsScreen = () => {
+  const [userInfo, setUserInfo] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getHiddenPassword = (password) => {
+    return '*'.repeat(password.length);
+  };
+
+  useEffect(() => {
+    // Function to fetch user info
+    const fetchUserInfo = async () => {
+      try {
+        // Fetch user info from API
+        const response = await fetch('http://192.168.2.10:3000/api/user/search?q=shrill', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add authorization header with token here if required
+          },
+        });
+
+
+
+        // Parse response to JSON
+        const data = await response.json();
+        console.log(data.data[0]);
+
+        // Set user info to state
+        setUserInfo(data.data[0]);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // Call fetchUserInfo function
+    fetchUserInfo();
+  }, []);
+
+
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              marginBottom: 16,
-            }}>
-            Example of Splash, Login and Sign Up in React Native
-            {'\n\n'}
-            This is the Settings Screen
-          </Text>
-        </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-          Splash, Login and Register Example{'\n'}React Native
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-          www.aboutreact.com
-        </Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      {userInfo && (
+        <>
+          <View style={styles.row}>
+            <Text style={styles.label}>Name:</Text>
+            <Text style={styles.value}>{userInfo.name}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.value}>{userInfo.email}</Text>
+            </View>
+            <View style={styles.row}>
+           {showPassword ? (
+           <>
+             <Text style={styles.label}>Password:</Text>
+             <Text style={styles.value}>{userInfo.password}</Text>
+           </>
+         ) : (
+           <>
+             <Text style={styles.label}>Password:</Text>
+             <Text style={styles.value, { marginRight: 10 }}>{getHiddenPassword(userInfo.password)}</Text>
+           </>
+         )}
+
+         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+           <Text style={styles.button}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
+         </TouchableOpacity>
+          </View>
+
+        </>
+      )}
+    </View>
   );
 };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#fff',
+      padding: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    label: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginRight: 10,
+      color: '#000',
+    },
+    value: {
+      fontSize: 16,
+      color: '#000',
+    },
+    button: {
+      fontSize: 16,
+      color: 'blue',
+      textDecorationLine: 'underline',
+      marginLeft: 10,
+    },
+  });
 export default SettingsScreen;
+
+

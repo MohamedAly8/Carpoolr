@@ -33,8 +33,8 @@ const SplashScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../Image/aboutreact.png')}
-        style={{width: '100%', resizeMode: 'contain', margin: 0}}
+        source={require('../Image/splash.png')}
+        style={{width: '110%', resizeMode: 'contain', margin: 0}}
       />
       <ActivityIndicator
         animating={animating}
