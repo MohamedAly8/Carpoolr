@@ -16,11 +16,12 @@ const SettingsScreen = () => {
     const fetchUserInfo = async () => {
       try {
         // Fetch user info from API
-        const response = await fetch('http://192.168.2.10:3000/api/user/search?q=shrill', {
+        const user_id = await AsyncStorage.getItem('user_name');
+        console.log(user_id);
+        const response = await fetch(`http://192.168.2.10:3000/api/user/search?q=${user_id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            // Add authorization header with token here if required
           },
         });
 
@@ -28,7 +29,8 @@ const SettingsScreen = () => {
 
         // Parse response to JSON
         const data = await response.json();
-        console.log(data.data[0]);
+//        console.log(data);
+        console.log(data);
 
         // Set user info to state
         setUserInfo(data.data[0]);
