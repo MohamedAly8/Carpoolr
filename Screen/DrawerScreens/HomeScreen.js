@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
  import AsyncStorage from '@react-native-async-storage/async-storage';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
+import auth from '@react-native-firebase/auth';
 
  export default function HomeScreen() {
    const [username, setUsername] = useState('');
@@ -10,9 +11,10 @@ import React, { useState, useEffect } from 'react';
 
    useEffect(() => {
      async function getUsername() {
-       const value = await AsyncStorage.getItem('user_name');
-       if (value !== null) {
-         setUsername(value);
+       const user = auth().currentUser.displayName;
+       console.log(user);
+       if (user !== null) {
+         setUsername(user);
        }
      }
 
@@ -54,7 +56,7 @@ import React, { useState, useEffect } from 'react';
                   },
                 }}
               />
-
+        <Text style={styles.tourhead}> Tour Mode Available Now! </Text>
         <Text> You are going to {destination}</Text>
       </View>
     </View>
@@ -82,6 +84,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
 
   },
+  tourhead: {
+    fontSize: 30,
+
+  },
   profileButton: {
     backgroundColor: '#2F2F2F',
     paddingHorizontal: 20,
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   promptText: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#1E1E1E',
     marginBottom: 20,

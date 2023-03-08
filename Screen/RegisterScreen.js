@@ -1,7 +1,3 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
-
-// Import React and Component
 import React, {useState, createRef} from 'react';
 import {
   StyleSheet,
@@ -16,6 +12,9 @@ import {
 } from 'react-native';
 
 import Loader from './Components/Loader';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 const RegisterScreen = (props) => {
   const [userName, setUserName] = useState('');
@@ -49,60 +48,55 @@ const RegisterScreen = (props) => {
       alert('Please fill Age');
       return;
     }
+    AsyncStorage.setItem('age', userAge);
     if (!userAddress) {
       alert('Please fill Address');
       return;
     }
+    AsyncStorage.setItem('address', userAddress);
     if (!userPassword) {
       alert('Please fill Password');
       return;
     }
+    AsyncStorage.setItem('password', userPassword);
+
+
     //Show Loader
     setLoading(true);
-    var dataToSend = {
-      name: userName,
-      email: userEmail,
-      age: userAge,
-      address: userAddress,
-      password: userPassword,
-    };
-    var formBody = [];
-    for (var key in dataToSend) {
-      var encodedKey = encodeURIComponent(key);
-      var encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
+    auth()
+      .createUserWithEmailAndPassword(userEmail, userPassword)
 
-    fetch('http://192.168.2.10:3000/api/user/register', {
-      method: 'POST',
-      body: formBody,
-      headers: {
-        //Header Defination
-        'Content-Type':
-        'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //Hide Loader
+      .then(function(result) {
+
+
         setLoading(false);
-        console.log(responseJson);
-        // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          setIsRegistraionSuccess(true);
-          console.log(
-            'Registration Successful. Please Login to proceed'
-          );
-        } else {
-          setErrortext(responseJson.msg);
-        }
+
+        // Create a request object with displayName
+
+        setIsRegistraionSuccess(true);
+        console.log(
+          'Registration Successful. Please Login to proceed'
+        );
+
+        return result.user.updateProfile({displayName: userName})
       })
+
+
       .catch((error) => {
-        //Hide Loader
         setLoading(false);
+        if (error.code === 'auth/email-already-in-use') {
+          setErrortext('That email address is already in use!');
+        } else if (error.code === 'auth/invalid-email') {
+          setErrortext('That email address is invalid!');
+        } else if (error.code === 'auth/weak-password') {
+          setErrortext('The password is too weak!');
+        } else {
+          setErrortext('Something went wrong!');
+        }
         console.error(error);
       });
+
+
   };
   if (isRegistraionSuccess) {
     return (
@@ -131,6 +125,7 @@ const RegisterScreen = (props) => {
         </TouchableOpacity>
       </View>
     );
+
   }
   return (
     <View style={{flex: 1, backgroundColor: '#307ecc'}}>

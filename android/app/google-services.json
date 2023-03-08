@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "765494880785",
+    "project_id": "carpoolr-376017",
+    "storage_bucket": "carpoolr-376017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765494880785:android:a8491f3df3a181e2cd1fb0",
+        "android_client_info": {
+          "package_name": "com.carpoolr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765494880785-4tuqi44tn5b7ggndlm2p0jc9jqg856ls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD32ngMnB4SNPAjrn2tAOulwUjHH1uu-A0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765494880785-4tuqi44tn5b7ggndlm2p0jc9jqg856ls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

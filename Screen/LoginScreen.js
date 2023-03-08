@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 import Loader from './Components/Loader';
 
@@ -39,49 +40,31 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    let dataToSend = {email: userEmail, password: userPassword};
-    let formBody = [];
-    for (let key in dataToSend) {
-      let encodedKey = encodeURIComponent(key);
-      let encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
 
-    fetch('http://192.168.2.10:3000/api/user/login', {
-      method: 'POST',
-      body: formBody,
-      headers: {
-        //Header Defination
-        'Content-Type':
-        'application/x-www-form-urlencoded;charset=UTF-8',
-      },
+  auth()
+    .signInWithEmailAndPassword(userEmail, userPassword)
+    .then((response) => {
+      //Hide Loader
+      setLoading(false);
+      console.log(response);
+      AsyncStorage.setItem('user_id', response.user.email);
+      AsyncStorage.setItem('user_name', response.user.displayName);
+      AsyncStorage.setItem('password', userPassword);
+      navigation.replace('DrawerNavigationRoutes');
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //Hide Loader
-        setLoading(false);
-        console.log(responseJson);
-        // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          AsyncStorage.setItem('user_id', responseJson.data.email);
-          AsyncStorage.setItem('user_name', responseJson.data.name);
-          AsyncStorage.setItem('age', responseJson.data.age);
-          AsyncStorage.setItem('password', responseJson.data.password);
-          console.log(responseJson.data.email);
-          console.log(responseJson.data.name);
-          navigation.replace('DrawerNavigationRoutes');
-        } else {
-          setErrortext(responseJson.msg);
-          console.log('Please check your email id or password');
-        }
-      })
-      .catch((error) => {
-        //Hide Loader
-        setLoading(false);
-        console.error(error);
-      });
-  };
+    .catch((error) => {
+      //Hide Loader
+      setLoading(false);
+      if (error.code === 'auth/wrong-password') {
+        setErrortext('The password is invalid');
+      } else if (error.code === 'auth/user-not-found') {
+        setErrortext('The email address is not registered');
+      } else {
+        console.log(error);
+        setErrortext('Something went wrong. Please try again later.');
+      }
+    });
+};
 
   return (
     <View style={styles.mainBody}>

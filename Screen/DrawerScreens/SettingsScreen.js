@@ -2,13 +2,21 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from "@env";
 import React, { useState, useEffect } from 'react';
+import auth from '@react-native-firebase/auth';
+
 
 const SettingsScreen = () => {
-  const [userInfo, setUserInfo] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+  const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const getHiddenPassword = (password) => {
-    return '*'.repeat(password.length);
+    if (password != null) {
+         return '*'.repeat(password.length);
+    }
+    return '*****';
+
   };
 
   useEffect(() => {
@@ -16,24 +24,15 @@ const SettingsScreen = () => {
     const fetchUserInfo = async () => {
       try {
         // Fetch user info from API
-        const user_id = await AsyncStorage.getItem('user_name');
-        console.log(user_id);
-        const response = await fetch(`http://192.168.2.10:3000/api/user/search?q=${user_id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
 
+        setName(auth().currentUser.displayName);
+        setEmail(auth().currentUser.email);
+        const password = await AsyncStorage.getItem('password');
 
+        if(password != null){
+            setPassword(password);
+        }
 
-        // Parse response to JSON
-        const data = await response.json();
-//        console.log(data);
-        console.log(data);
-
-        // Set user info to state
-        setUserInfo(data.data[0]);
 
       } catch (error) {
         console.error(error);
@@ -47,26 +46,26 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      {userInfo && (
+      {name && (
         <>
           <View style={styles.row}>
             <Text style={styles.label}>Name:</Text>
-            <Text style={styles.value}>{userInfo.name}</Text>
+            <Text style={styles.value}>{name}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Email:</Text>
-            <Text style={styles.value}>{userInfo.email}</Text>
+            <Text style={styles.value}>{email}</Text>
             </View>
             <View style={styles.row}>
            {showPassword ? (
            <>
              <Text style={styles.label}>Password:</Text>
-             <Text style={styles.value}>{userInfo.password}</Text>
+             <Text style={styles.value}>{password}</Text>
            </>
          ) : (
            <>
              <Text style={styles.label}>Password:</Text>
-             <Text style={styles.value, { marginRight: 10 }}>{getHiddenPassword(userInfo.password)}</Text>
+             <Text style={styles.value, { marginRight: 10 }}>{getHiddenPassword(password)}</Text>
            </>
          )}
 
