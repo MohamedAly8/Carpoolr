@@ -4,7 +4,7 @@
 // Import React and Component
 import React from 'react';
 import {View, Text, Alert, StyleSheet} from 'react-native';
-
+import auth from '@react-native-firebase/auth';
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -14,16 +14,18 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomSidebarMenu = (props) => {
+
+    const currentUser = auth().currentUser.displayName;
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <View style={stylesSidebar.profileHeader}>
         <View style={stylesSidebar.profileHeaderPicCircle}>
           <Text style={{fontSize: 25, color: '#307ecc'}}>
-            {'About React'.charAt(0)}
+            {currentUser.charAt(0)}
           </Text>
         </View>
         <Text style={stylesSidebar.profileHeaderText}>
-          AboutReact
+          Hey, {currentUser}
         </Text>
       </View>
       <View style={stylesSidebar.profileHeaderLine} />
@@ -32,7 +34,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItemList {...props} />
         <DrawerItem
           label={({color}) =>
-            <Text style={{color: '#d8d8d8'}}>
+            <Text style={{color: 'white'}}>
               Logout
             </Text>
           }

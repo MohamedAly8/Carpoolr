@@ -27,14 +27,14 @@ const SplashScreen = ({navigation}) => {
           value === null ? 'Auth' : 'DrawerNavigationRoutes'
         ),
       );
-    }, 5000);
+    }, 1500);
   }, []);
 
   return (
     <View style={styles.container}>
       <Image
         source={require('../Image/splash.png')}
-        style={{width: '110%', resizeMode: 'contain', margin: 0}}
+        style={{height: '105%',  resizeMode: 'contain'}}
       />
       <ActivityIndicator
         animating={animating}
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     alignItems: 'center',
-    height: 80,
+    height: 0,
   },
 });

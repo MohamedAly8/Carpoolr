@@ -128,7 +128,7 @@ const RegisterScreen = (props) => {
 
   }
   return (
-    <View style={{flex: 1, backgroundColor: '#307ecc'}}>
+    <View style={{flex: 1, backgroundColor: '#f9f6fd'}}>
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -138,14 +138,15 @@ const RegisterScreen = (props) => {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../Image/aboutreact.png')}
+            source={require('../Image/success.png')}
             style={{
-              width: '50%',
+              width: '90%',
               height: 100,
               resizeMode: 'contain',
               margin: 30,
             }}
           />
+          <Text style={styles.promptText}>  Begin Your Journey Here </Text>
         </View>
         <KeyboardAvoidingView enabled>
           <View style={styles.SectionStyle}>
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#692ad5',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
@@ -279,12 +280,12 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: '692ad5',
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: '#dadae8',
+    borderColor: '#692ad5',
   },
   errorTextStyle: {
     color: 'red',
@@ -297,4 +298,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 30,
   },
+  promptText: {
+   fontSize: 17,
+   marginBottom: 30,
+   fontWeight: 'bold',
+  }
 });

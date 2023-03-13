@@ -4,22 +4,50 @@ import React, { useState, useEffect } from 'react';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
 import auth from '@react-native-firebase/auth';
+import MapView from 'react-native-maps';
+import {MapViewDirections} from 'react-native-maps-directions';
+import Geolocation from 'react-native-geolocation-service';
 
- export default function HomeScreen() {
-   const [username, setUsername] = useState('');
-   const [destination, setDestination] = useState('');
+export default function HomeScreen() {
+  const [username, setUsername] = useState('');
+  const [destination, setDestination] = useState('');
+  const [origin, setOrigin] = useState(null);
 
-   useEffect(() => {
-     async function getUsername() {
-       const user = auth().currentUser.displayName;
-       console.log(user);
-       if (user !== null) {
-         setUsername(user);
-       }
-     }
+  useEffect(() => {
+    async function getUsername() {
+      const user = auth().currentUser.displayName;
+      console.log(user);
+      if (user !== null) {
+        setUsername(user);
+      }
+    }
 
-     getUsername();
-   }, []);
+async function getOrigin() {
+//  try {
+//    const position = await Geolocation.getCurrentPosition({
+//      enableHighAccuracy: true,
+//      timeout: 20000,
+//      maximumAge: 1000,
+//    });
+//    console.log("position:", position);
+//    if (position && position.coords) {
+////      const { latitude, longitude } = position.coords;
+      latitude = 43.260319;
+      longitude = -79.919060;
+//      console.log("latitude:", latitude);
+//      console.log("longitude:", longitude);
+      setOrigin({ latitude, longitude });
+    }
+//  } catch (error) {
+//    console.log("Error getting current position:", error);
+//  }
+//}
+  getUsername();
+  getOrigin();
+
+
+
+}, []);
 
   return (
     <View style={styles.container}>
@@ -29,35 +57,30 @@ import auth from '@react-native-firebase/auth';
 
       <View style={styles.body}>
         <GooglePlacesAutocomplete
-                placeholder="Where do you want to go?"
-                onPress={(data, details = null) => {
-                  // 'details' is provided when fetchDetails = true
-                  console.log(data, details);
-                  setDestination(data.description);
-                  AsyncStorage.setItem('destination', data.description);
-
-                }}
-                query={{
-                  key: GOOGLE_MAPS_API_KEY,
-                  language: 'en',
-                }}
-                fetchDetails={true}
-                styles={{
-                  textInputContainer: {
-                    width: '100%',
-                  },
-                  textInput: {
-                    height: 40,
-                    borderWidth: 1,
-                    borderColor: '#ddd',
-                    borderRadius: 4,
-                    paddingLeft: 10,
-                    marginBottom: 20,
-                  },
-                }}
-              />
-        <Text style={styles.tourhead}> Tour Mode Available Now! </Text>
-        <Text> You are going to {destination}</Text>
+          placeholder="Where do you want to go?"
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+//            setDestination(data.description);
+          }}
+          query={{
+            key: GOOGLE_MAPS_API_KEY,
+            language: 'en',
+          }}
+          fetchDetails={true}
+          styles={{
+            textInputContainer: {
+              width: '100%',
+            },
+            textInput: {
+              height: 40,
+              borderWidth: 1,
+              borderColor: '#ddd',
+              borderRadius: 4,
+              paddingLeft: 10,
+              marginBottom: 20,
+            },
+          }}
+        />
       </View>
     </View>
   );
@@ -75,12 +98,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 20,
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#f9f6fd',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#692ad5',
     textAlign: 'center',
 
   },
@@ -100,6 +123,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
