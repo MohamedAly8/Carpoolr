@@ -1,8 +1,10 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from "@env";
 import React, { useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const SettingsScreen = () => {
@@ -10,6 +12,7 @@ const SettingsScreen = () => {
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
 
   const getHiddenPassword = (password) => {
     if (password != null) {
@@ -42,6 +45,37 @@ const SettingsScreen = () => {
     // Call fetchUserInfo function
     fetchUserInfo();
   }, []);
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to delete your account?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            return null;
+          },
+        },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            const user = auth().currentUser;
+            try {
+              await user.delete();
+              AsyncStorage.clear();
+              navigation.replace('Auth');
+            } catch (error) {
+              console.log(error);
+            }
+          },
+          style: 'destructive',
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
 
 
   return (
@@ -76,6 +110,9 @@ const SettingsScreen = () => {
 
         </>
       )}
+      <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
+        <Text style={styles.buttonText}>Delete Account</Text>
+      </TouchableOpacity>
     </View>
   );
 };
