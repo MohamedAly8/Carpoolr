@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
 import auth from '@react-native-firebase/auth';
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {MapViewDirections} from 'react-native-maps-directions';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -12,6 +12,14 @@ export default function HomeScreen() {
   const [username, setUsername] = useState('');
   const [destination, setDestination] = useState('');
   const [origin, setOrigin] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [region, setRegion] = useState({
+      latitude: 43.260319,
+      longitude: -79.919060,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  const mapRef = React.useRef(null);
 
   useEffect(() => {
     async function getUsername() {
@@ -22,32 +30,28 @@ export default function HomeScreen() {
       }
     }
 
-async function getOrigin() {
-//  try {
-//    const position = await Geolocation.getCurrentPosition({
-//      enableHighAccuracy: true,
-//      timeout: 20000,
-//      maximumAge: 1000,
-//    });
-//    console.log("position:", position);
-//    if (position && position.coords) {
-////      const { latitude, longitude } = position.coords;
-      latitude = 43.260319;
-      longitude = -79.919060;
-//      console.log("latitude:", latitude);
-//      console.log("longitude:", longitude);
-      setOrigin({ latitude, longitude });
-    }
-//  } catch (error) {
-//    console.log("Error getting current position:", error);
-//  }
-//}
   getUsername();
-  getOrigin();
-
-
 
 }, []);
+
+  const onDestinationSelect = (data, details = null) => {
+    setDestination(data.description);
+    setSelectedDestination({
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng
+    });
+    const newRegion = {
+          latitude: details.geometry.location.lat,
+          longitude: details.geometry.location.lng,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        };
+    setRegion(newRegion);
+
+    if (mapRef.current) {
+          mapRef.current.animateToRegion(newRegion, 1000);
+        }
+  }
 
   return (
     <View style={styles.container}>
@@ -58,10 +62,7 @@ async function getOrigin() {
       <View style={styles.body}>
         <GooglePlacesAutocomplete
           placeholder="Where do you want to go?"
-          onPress={(data, details = null) => {
-            // 'details' is provided when fetchDetails = true
-//            setDestination(data.description);
-          }}
+          onPress={onDestinationSelect}
           query={{
             key: GOOGLE_MAPS_API_KEY,
             language: 'en',
@@ -81,7 +82,27 @@ async function getOrigin() {
             },
           }}
         />
+
+        <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button}>
+                          <Text style={styles.buttonText}>Request a Carpool</Text>
+                        </TouchableOpacity>
+                      </View>
+
       </View>
+
+       <MapView style={{ flex: 1, minHeight: 200, marginTop: 10 }}
+            ref={mapRef}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={region}
+            >
+            {selectedDestination && (
+              <Marker
+                coordinate={selectedDestination}
+                title="Your Destination"
+              />
+            )}
+        </MapView>
     </View>
   );
 };
@@ -96,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: '#f9f6fd',
   },
@@ -124,8 +145,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   map: {
     flex: 1,
@@ -138,5 +157,26 @@ const styles = StyleSheet.create({
     color: '#1E1E1E',
     marginBottom: 20,
   },
+    buttonContainer: {
+      alignItems: 'center',
+      marginTop: 20,
+    },
+    button: {
+      backgroundColor: '#692ad5',
+          borderRadius: 10,
+          width: '50%',
+          height: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 20,
+
+
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
 });
 

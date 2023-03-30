@@ -50,7 +50,7 @@ const SettingScreenStack = ({navigation}) => {
           <NavigationDrawerHeader navigationProps={navigation} />
         ),
         headerStyle: {
-          backgroundColor: 'white', //Set Header color
+          backgroundColor: '#692ad5', //Set Header color
         },
         headerTintColor: 'white', //Set Header text color
         headerTitleStyle: {
