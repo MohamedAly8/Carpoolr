@@ -2,11 +2,11 @@
 Carpoolr is a ride sharing app that connects users with similar destinations and interests to make commuting more enjoyable and eco-friendly. Our app offers a variety of features to ensure a safe and convenient ride sharing experience for our users.
 
 ## Features
-Tour Mode: Pair carpoolers with similar tour destinations and interests to make commuting more fun and interactive.
+*Tour Mode*: Pair carpoolers with similar tour destinations and interests to make commuting more fun and interactive.
 
-Recurring Rides: Schedule recurring rides with your preferred carpool partners to save time and reduce the hassle of daily commuting.
+*Recurring Rides*: Schedule recurring rides with your preferred carpool partners to save time and reduce the hassle of daily commuting.
 
-Real-time Matching: Get matched with riders going to the same place as you and save fare money!
+*Real-time Matching*: Get matched with riders going to the same place as you and save fare money!
 
 ## Project Requirements
 Our app is designed with various non-functional requirements to ensure a seamless and reliable user experience. These requirements include:
