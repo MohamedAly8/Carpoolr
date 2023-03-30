@@ -145,6 +145,10 @@ android {
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
+            def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY")
+            if (googleMapsApiKey != null && !googleMapsApiKey.isEmpty()) {
+                variant.resValue "string", "maps_key", googleMapsApiKey
+            }
 
         }
     }
@@ -153,7 +157,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    implementation 'io.github.cdimascio:dotenv-java:2.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 
