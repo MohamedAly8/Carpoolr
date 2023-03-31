@@ -3,6 +3,8 @@ Carpoolr is a ride sharing app that connects users with similar destinations and
 
 ![Carpoolr Logo](Image/logo.png#center)
 
+<img style="display: block; margin: auto;" src="Image/logo.png">
+
 ## Features
 *Tour Mode*: Pair carpoolers with similar tour destinations and interests to make commuting more fun and interactive.
 
@@ -50,7 +52,3 @@ Isra Zahid
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 
-img[src*='#center'] { 
-    display: block;
-    margin: auto;
-}
