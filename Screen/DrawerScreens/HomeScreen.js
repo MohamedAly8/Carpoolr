@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
- import { Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+ import { Text, View, StyleSheet, TouchableOpacity, TextInput, PermissionsAndroid} from 'react-native';
  import AsyncStorage from '@react-native-async-storage/async-storage';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
 import auth from '@react-native-firebase/auth';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {MapViewDirections} from 'react-native-maps-directions';
+import MapViewDirections from 'react-native-maps-directions';
 import Geolocation from 'react-native-geolocation-service';
 
 export default function HomeScreen() {
   const [username, setUsername] = useState('');
-  const [destination, setDestination] = useState('');
-  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [selectedPickup, setSelectedPickup] = useState(null);
+  const [pickupLocation, setPickup] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [region, setRegion] = useState({
       latitude: 43.260319,
@@ -48,9 +49,6 @@ export default function HomeScreen() {
         };
     setRegion(newRegion);
 
-    if (mapRef.current) {
-          mapRef.current.animateToRegion(newRegion, 1000);
-        }
   }
 
   return (
@@ -60,6 +58,37 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.body}>
+        <Text style={styles.inputPrompts}> Where are you getting picked up? </Text>
+        <GooglePlacesAutocomplete style={styles.autocompleteInput}
+          placeholder="Where do you want to get picked up?"
+          onPress={(data, details = null) => {
+            setPickup(data.description);
+            setSelectedPickup({
+              latitude: details.geometry.location.lat,
+              longitude: details.geometry.location.lng
+            });
+          }}
+          query={{
+            key: GOOGLE_MAPS_API_KEY,
+            language: 'en',
+          }}
+          fetchDetails={true}
+          styles={{
+            textInputContainer: {
+              width: '100%',
+              marginBottom: 5,
+            },
+            textInput: {
+              height: 40,
+              borderWidth: 1,
+              borderColor: '#ddd',
+              borderRadius: 4,
+              paddingLeft: 10,
+              marginBottom: 20,
+                },
+              }}
+            />
+         <Text style={styles.inputPrompts} >Where do you want to go?</Text>
         <GooglePlacesAutocomplete
           placeholder="Where do you want to go?"
           onPress={onDestinationSelect}
@@ -71,6 +100,7 @@ export default function HomeScreen() {
           styles={{
             textInputContainer: {
               width: '100%',
+              marginTop: 5,
             },
             textInput: {
               height: 40,
@@ -83,26 +113,43 @@ export default function HomeScreen() {
           }}
         />
 
-        <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button}>
-                          <Text style={styles.buttonText}>Request a Carpool</Text>
-                        </TouchableOpacity>
-                      </View>
+     <View style={styles.buttonContainer}>
+       <TouchableOpacity style={styles.button}>
+         <Text style={styles.buttonText}>Request Carpool</Text>
+       </TouchableOpacity>
 
-      </View>
+       <TouchableOpacity style={styles.button}>
+         <Text style={styles.buttonText}>Try Tour Mode</Text>
+       </TouchableOpacity>
+     </View>
 
-       <MapView style={{ flex: 1, minHeight: 200, marginTop: 10 }}
+     </View>
+
+
+
+
+       <MapView style={{ flex: 1, minHeight:50, marginTop: 10 }}
             ref={mapRef}
             provider={PROVIDER_GOOGLE}
             initialRegion={region}
             >
-            {selectedDestination && (
-              <Marker
-                coordinate={selectedDestination}
-                title="Your Destination"
+            {selectedPickup && selectedDestination && (
+              <MapViewDirections
+                origin={selectedPickup}
+                destination={selectedDestination}
+                apikey={GOOGLE_MAPS_API_KEY}
+                strokeWidth={3}
+                strokeColor="hotpink"
               />
             )}
+            {selectedPickup && selectedDestination && (
+              mapRef.current.fitToCoordinates([selectedPickup, selectedDestination], {
+                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+                animated: true,
+              })
+            )}
         </MapView>
+
     </View>
   );
 };
@@ -111,6 +158,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+
   },
   header: {
     flexDirection: 'row',
@@ -157,18 +205,22 @@ const styles = StyleSheet.create({
     color: '#1E1E1E',
     marginBottom: 20,
   },
-    buttonContainer: {
-      alignItems: 'center',
-      marginTop: 20,
-    },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
     button: {
       backgroundColor: '#692ad5',
           borderRadius: 10,
-          width: '50%',
+          width: '40%',
           height: 50,
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: 20,
+          marginRight: 5,
+          marginLeft: 5,
 
 
     },
@@ -178,5 +230,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
     },
+    inputPrompts: {
+        marginBottom: 5,
+        marginTop: 5,
+        textAlign: 'center',
+        fontSize: 15,
+
+
+   }
+
 });
 

@@ -3,10 +3,6 @@
 .DS_Store
 
 
-# MAPS API KEY
-android/app/src/main/res/values/strings.xml
-
-
 # Xcode
 #
 build/
