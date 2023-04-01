@@ -14,6 +14,9 @@ export default function HomeScreen() {
   const [selectedPickup, setSelectedPickup] = useState(null);
   const [pickupLocation, setPickup] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
+  const[tripDistance, setTripDistance] = useState(null);
+  const[tripDuration, setTripDuration] = useState(null);
+  const[estimatedFare, setEstimatedFare] = useState(null);
   const [region, setRegion] = useState({
       latitude: 43.260319,
       longitude: -79.919060,
@@ -139,6 +142,15 @@ export default function HomeScreen() {
           }}
         />
 
+
+        {tripDistance && tripDuration &&
+        <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center', zIndex: -1 }}>
+          <Text style={{ fontSize: 20 }}>
+            Distance: {tripDistance} km | Time: {tripDuration} min
+          </Text>
+          <Text style={{fontSize: 20, marginBottom: 10}}> Estimated Fare: ${estimatedFare}  </Text>
+        </View>
+        }
      <View style={styles.buttonContainer}>
        <TouchableOpacity style={styles.button}>
          <Text style={styles.buttonText}>Request Carpool</Text>
@@ -166,6 +178,19 @@ export default function HomeScreen() {
                 apikey={GOOGLE_MAPS_API_KEY}
                 strokeWidth={3}
                 strokeColor="hotpink"
+
+                onReady={result => {
+                    const costPerKm = 0.5;
+                    const minFare = 5;
+                    const distanceInKm = result.distance;
+                    setTripDistance(distanceInKm);
+                    setTripDuration(result.duration.toFixed(2));
+                    const fare = Math.max(minFare, distanceInKm * costPerKm);
+                    setEstimatedFare(fare.toFixed(2));
+                    console.log(`Distance: ${result.distance} km`);
+                    console.log(`Duration: ${result.duration.toFixed(2)} min`);
+                  }}
+
               />
             )}
             {selectedPickup && selectedDestination && (
