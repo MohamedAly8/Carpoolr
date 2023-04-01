@@ -1,5 +1,3 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
 import React from 'react';
@@ -35,7 +33,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label={({color}) =>
             <Text style={{color: 'white'}}>
-              Logout
+              Log Out
             </Text>
           }
           onPress={() => {

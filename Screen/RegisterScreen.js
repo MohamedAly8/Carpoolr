@@ -103,7 +103,7 @@ const RegisterScreen = (props) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#307ecc',
+          backgroundColor: '#f8f0ff',
           justifyContent: 'center',
         }}>
         <Image
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   successTextStyle: {
-    color: 'white',
+    color: '#692ad5',
     textAlign: 'center',
     fontSize: 18,
     padding: 30,
