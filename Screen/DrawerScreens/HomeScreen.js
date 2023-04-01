@@ -59,7 +59,7 @@ export default function HomeScreen() {
 
       <View style={styles.body}>
         <Text style={styles.inputPrompts}> Where are you getting picked up? </Text>
-        <GooglePlacesAutocomplete style={styles.autocompleteInput}
+        <GooglePlacesAutocomplete
           placeholder="Where do you want to get picked up?"
           onPress={(data, details = null) => {
             setPickup(data.description);
@@ -86,6 +86,18 @@ export default function HomeScreen() {
               paddingLeft: 10,
               marginBottom: 20,
                 },
+                listView: {
+                  position: 'absolute',
+                  zIndex: 9999, // set the z-index to a high value to bring the dropdown to the front
+                  marginTop: 40, // adjust this value based on the height of the input container
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: '#ddd',
+                  borderRadius: 4,
+                },
+                poweredContainer: {
+                  display: 'none', // hide the "powered by Google" logo
+                },
               }}
             />
          <Text style={styles.inputPrompts} >Where do you want to go?</Text>
@@ -108,7 +120,21 @@ export default function HomeScreen() {
               borderColor: '#ddd',
               borderRadius: 4,
               paddingLeft: 10,
+
               marginBottom: 20,
+            },
+
+            listView: {
+              position: 'absolute',
+              zIndex: 9999, // set the z-index to a high value to bring the dropdown to the front
+              marginTop: 40, // adjust this value based on the height of the input container
+              backgroundColor: 'white',
+              borderWidth: 1,
+              borderColor: '#ddd',
+              borderRadius: 4,
+            },
+            poweredContainer: {
+              display: 'none', // hide the "powered by Google" logo
             },
           }}
         />
@@ -123,12 +149,12 @@ export default function HomeScreen() {
        </TouchableOpacity>
      </View>
 
-     </View>
 
 
+        </View>
 
-
-       <MapView style={{ flex: 1, minHeight:50, marginTop: 10 }}
+        <View style={{ flex: 1, borderRadius: 40, overflow: 'hidden' }}>
+       <MapView style={{ flex: 1, minHeight:50, marginLeft: 10, marginRight: 10, marginBottom: 10, borderRadius: 10}}
             ref={mapRef}
             provider={PROVIDER_GOOGLE}
             initialRegion={region}
@@ -149,8 +175,12 @@ export default function HomeScreen() {
               })
             )}
         </MapView>
+        </View>
+
+
 
     </View>
+
   );
 };
 
@@ -192,7 +222,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   body: {
-    flex: 1,
+    flex: 0.8,
   },
   map: {
     flex: 1,
@@ -210,6 +240,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+    zIndex: -1,
   },
     button: {
       backgroundColor: '#692ad5',
@@ -235,6 +266,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         textAlign: 'center',
         fontSize: 15,
+        zIndex: -1,
 
 
    }
