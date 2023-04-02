@@ -151,7 +151,12 @@ import { useNavigation } from '@react-navigation/native';
 {editMode ? (
   <>
   <View style={styles.settingsLayout}>
+      <View style={styles.edittitleWrapper}>
+       <Text style={styles.edittitle}> Edit Information </Text>
+       </View>
+
     <View style={styles.row}>
+
       <Text style={styles.label}>Name:</Text>
       <TextInput style={styles.input} value={newName} onChangeText={setNewName} placeholder={name}/>
     </View>
@@ -172,6 +177,9 @@ import { useNavigation } from '@react-navigation/native';
 ) : (
   <>
   <View style={style=styles.settingsLayout}>
+    <View style={styles.titleWrapper}>
+     <Text style={styles.title}> Account Information </Text>
+     </View>
     <View style={styles.row}>
       <Text style={styles.label}>Name:</Text>
       <Text style={styles.value}>{name}</Text>
@@ -226,10 +234,20 @@ import { useNavigation } from '@react-navigation/native';
       backgroundColor: '#fff',
       padding: 20,
     },
+    titleWrapper: {
+      flex: 0.5,
+    },
+    edittitleWrapper: {
+      flex: 0.4,
+    },
     title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 20,
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    },
+    edittitle: {
+        fontSize: 30,
+        fontWeight: 'bold',
     },
     row: {
       flexDirection: 'row',

@@ -9,6 +9,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 // Import Screens
 import HomeScreen from './DrawerScreens/HomeScreen';
 import SettingsScreen from './DrawerScreens/SettingsScreen';
+import RideHistory from './DrawerScreens/RideHistory';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 
@@ -66,19 +67,45 @@ const SettingScreenStack = ({navigation}) => {
   );
 };
 
+const RideHistoryStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="RideHistory"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="RideHistory"
+        component={RideHistory}
+        options={{
+          title: 'Ride History',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const DrawerNavigatorRoutes = (props) => {
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: '#cee1f2',
-        color: 'white',
-        itemStyle: {marginVertical: 5, color: 'white'},
-        labelStyle: {
-          color: 'white',
-        },
-      }}
-      screenOptions={{headerShown: false}}
-      drawerContent={CustomSidebarMenu}>
+
+
+    screenOptions={{headerShown: false,
+      inactiveTintColor: 'red', //Set inactive drawer text color
+      activeTintColor: 'white', //Set active drawer text color
+      style: {backgroundColor: 'red'},}}
+      drawerContent={CustomSidebarMenu}
+     >
+
       <Drawer.Screen
         name="HomeScreenStack"
         options={{drawerLabel: 'Home Screen'}}
@@ -89,6 +116,11 @@ const DrawerNavigatorRoutes = (props) => {
         options={{drawerLabel: 'Setting Screen'}}
         component={SettingScreenStack}
       />
+      <Drawer.Screen
+          name="RideHistoryStack"
+          options={{drawerLabel: 'Ride History'}}
+          component={RideHistoryStack}
+            />
     </Drawer.Navigator>
   );
 };
