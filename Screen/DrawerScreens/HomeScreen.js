@@ -51,7 +51,6 @@ export default function HomeScreen() {
           longitudeDelta: 0.0421,
         };
     setRegion(newRegion);
-
   }
 
   return (
@@ -176,19 +175,17 @@ export default function HomeScreen() {
                 origin={selectedPickup}
                 destination={selectedDestination}
                 apikey={GOOGLE_MAPS_API_KEY}
-                strokeWidth={3}
+                strokeWidth={5}
                 strokeColor="hotpink"
 
                 onReady={result => {
                     const costPerKm = 0.5;
                     const minFare = 5;
                     const distanceInKm = result.distance;
-                    setTripDistance(distanceInKm);
+                    setTripDistance(distanceInKm.toFixed(2));
                     setTripDuration(result.duration.toFixed(2));
                     const fare = Math.max(minFare, distanceInKm * costPerKm);
                     setEstimatedFare(fare.toFixed(2));
-                    console.log(`Distance: ${result.distance} km`);
-                    console.log(`Duration: ${result.duration.toFixed(2)} min`);
                   }}
 
               />

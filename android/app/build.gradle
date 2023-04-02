@@ -155,11 +155,14 @@ android {
 }
 
 dependencies {
+
+    implementation platform('com.google.firebase:firebase-bom:31.4.0')
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation 'io.github.cdimascio:dotenv-java:2.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    implementation 'com.google.firebase:firebase-firestore'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
