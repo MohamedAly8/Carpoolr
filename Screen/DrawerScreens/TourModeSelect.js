@@ -6,9 +6,12 @@ import axios from 'axios';
 
 const TourModeSelect = () => {
   const [destinations, setDestinations] = useState([]);
+  const [city, setcity] = useState(null);
 
   const getTouristDestinations = (city) => {
-    console.log("Here");
+
+    const cityTrim = city.split(','[0].trim())[0];
+    setcity(cityTrim);
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+${city}&key=${GOOGLE_MAPS_API_KEY}`)
     .then(response => {
       const results = response.data.results;
@@ -39,7 +42,7 @@ const TourModeSelect = () => {
       />
       {destinations.length > 0 &&
         <View style={styles.destinationsContainer}>
-          <Text style={styles.destinationsHeading}>Top 5 Tourist Destinations:</Text>
+          <Text style={styles.destinationsHeading}>Top 5 Tourist Destinations to {city}:</Text>
           {destinations.map((destination, index) => (
             <Text key={index} style={styles.destination}>{index + 1}. {destination}</Text>
           ))}
@@ -73,16 +76,17 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   destinationsContainer: {
+    flex: 5,
     marginTop: 20,
     alignItems: 'center'
   },
   destinationsHeading: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10
   },
   destination: {
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 5
   }
 });
