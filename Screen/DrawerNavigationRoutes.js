@@ -1,7 +1,7 @@
 
 // Import React
 import React from 'react';
-
+import {TouchableOpacity, Text} from 'react-native';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -10,6 +10,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeScreen from './DrawerScreens/HomeScreen';
 import SettingsScreen from './DrawerScreens/SettingsScreen';
 import RideHistory from './DrawerScreens/RideHistory';
+import TourModeSelect from './DrawerScreens/TourModeSelect';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 
@@ -36,6 +37,31 @@ const HomeScreenStack = ({navigation}) => {
           },
         }}
       />
+            <Stack.Screen
+              name="TourModeSelect"
+              component={TourModeSelect}
+              options={{
+                title: 'Tour Mode', //Set Header Title
+                headerLeft: () => (
+                  <NavigationDrawerHeader navigationProps={navigation} />
+                ),
+                headerStyle: {
+                  backgroundColor: '#692ad5', //Set Header color
+                },
+                headerTintColor: '#fff', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerRight: () => (
+                            <TouchableOpacity
+                              onPress={() => navigation.popToTop()}
+                              style={{ marginRight: 10 }}
+                            >
+                              <Text style={{ color: '#fff', fontWeight: 'bold' }}>HOME</Text>
+                            </TouchableOpacity>
+                          ),
+              }}
+            />
     </Stack.Navigator>
   );
 };
@@ -94,6 +120,33 @@ const RideHistoryStack = ({navigation}) => {
   );
 };
 
+const TourModeSelectStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="TourModeSelect"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="TourModeSelect"
+        component={TourModeSelect}
+        options={{
+          title: 'TourModeSelect',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const DrawerNavigatorRoutes = (props) => {
   return (
     <Drawer.Navigator
@@ -121,6 +174,12 @@ const DrawerNavigatorRoutes = (props) => {
           options={{drawerLabel: 'Ride History'}}
           component={RideHistoryStack}
             />
+
+     <Drawer.Screen
+         name="TourModeSelectStack"
+         options={{drawerLabel: 'Tour Mode'}}
+         component={TourModeSelectStack}
+           />
     </Drawer.Navigator>
   );
 };

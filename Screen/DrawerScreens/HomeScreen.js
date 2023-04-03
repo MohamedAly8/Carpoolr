@@ -8,7 +8,7 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import Geolocation from 'react-native-geolocation-service';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const [username, setUsername] = useState('');
   const [destination, setDestination] = useState(null);
   const [selectedPickup, setSelectedPickup] = useState(null);
@@ -52,6 +52,10 @@ export default function HomeScreen() {
         };
     setRegion(newRegion);
   }
+
+ const handleTourModeSelect = () => {
+    navigation.navigate('TourModeSelect');
+  };
 
   return (
     <View style={styles.container}>
@@ -155,7 +159,7 @@ export default function HomeScreen() {
          <Text style={styles.buttonText}>Request Carpool</Text>
        </TouchableOpacity>
 
-       <TouchableOpacity style={styles.button}>
+       <TouchableOpacity style={styles.button} onPress={handleTourModeSelect}>
          <Text style={styles.buttonText}>Try Tour Mode</Text>
        </TouchableOpacity>
      </View>
