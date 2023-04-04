@@ -32,7 +32,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItemList {...props} />
         <DrawerItem
           label={({color}) =>
-            <Text style={{color: 'white'}}>
+            <Text style={{color: 'black', fontWeight: 'bold'}}>
               Log Out
             </Text>
           }
@@ -71,13 +71,13 @@ const stylesSidebar = StyleSheet.create({
   sideMenuContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#692ad5',
+    backgroundColor: '#b89aeb',
     paddingTop: 40,
-    color: 'white',
+    color: 'black',
   },
   profileHeader: {
     flexDirection: 'row',
-    backgroundColor: '#692ad5',
+    backgroundColor: '#b89aeb',
     padding: 15,
     textAlign: 'center',
   },
@@ -92,7 +92,7 @@ const stylesSidebar = StyleSheet.create({
     alignItems: 'center',
   },
   profileHeaderText: {
-    color: 'white',
+    color: 'black',
     alignSelf: 'center',
     paddingHorizontal: 10,
     fontWeight: 'bold',

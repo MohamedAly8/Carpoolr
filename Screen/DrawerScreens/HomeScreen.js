@@ -25,18 +25,7 @@ export default function HomeScreen({navigation}) {
     });
   const mapRef = React.useRef(null);
 
-  useEffect(() => {
-    async function getUsername() {
-      const user = auth().currentUser.displayName;
-      console.log(user);
-      if (user !== null) {
-        setUsername(user);
-      }
-    }
 
-  getUsername();
-
-}, []);
 
   const onDestinationSelect = (data, details = null) => {
     setDestination(data.description);
@@ -60,7 +49,7 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome back, {username}!</Text>
+        <Text style={styles.headerText}>Welcome back, {auth().currentUser.displayName}!</Text>
       </View>
 
       <View style={styles.body}>
@@ -159,7 +148,11 @@ export default function HomeScreen({navigation}) {
          <Text style={styles.buttonText}>Request Carpool</Text>
        </TouchableOpacity>
 
-       <TouchableOpacity style={styles.button} onPress={handleTourModeSelect}>
+       <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Offer Carpool</Text>
+          </TouchableOpacity>
+
+       <TouchableOpacity style={styles.Tourbutton} onPress={handleTourModeSelect}>
          <Text style={styles.buttonText}>Try Tour Mode</Text>
        </TouchableOpacity>
      </View>
@@ -223,29 +216,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#f9f6fd',
+    backgroundColor: '#f8eef0',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#692ad5',
+    color: '#b14e64',
     textAlign: 'center',
 
   },
   tourhead: {
     fontSize: 30,
 
-  },
-  profileButton: {
-    backgroundColor: '#2F2F2F',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-  },
-  profileButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   body: {
     flex: 0.8,
@@ -263,6 +245,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -280,6 +263,17 @@ const styles = StyleSheet.create({
           marginLeft: 5,
 
 
+    },
+    Tourbutton: {
+          backgroundColor: '#b14e64',
+              borderRadius: 10,
+              width: '40%',
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 20,
+              marginRight: 5,
+              marginLeft: 5,
     },
     buttonText: {
       color: '#fff',
