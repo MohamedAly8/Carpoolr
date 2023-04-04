@@ -7,9 +7,11 @@ import auth from '@react-native-firebase/auth';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import Geolocation from 'react-native-geolocation-service';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export default function HomeScreen({navigation}) {
-  const [username, setUsername] = useState('');
+  const [currentUser, setCurrentUser] = useState(auth().currentUser.displayName);
   const [destination, setDestination] = useState(null);
   const [selectedPickup, setSelectedPickup] = useState(null);
   const [pickupLocation, setPickup] = useState(null);
@@ -25,7 +27,12 @@ export default function HomeScreen({navigation}) {
     });
   const mapRef = React.useRef(null);
 
-
+    // to rerender Home Screen when SideBar button is Pressed
+  useFocusEffect(
+    React.useCallback(() => {
+      const currentUser = auth().currentUser;
+      setCurrentUser(currentUser.displayName);
+    }, []));
 
   const onDestinationSelect = (data, details = null) => {
     setDestination(data.description);
@@ -49,7 +56,7 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome back, {auth().currentUser.displayName}!</Text>
+        <Text style={styles.headerText}>Welcome back, {currentUser}!</Text>
       </View>
 
       <View style={styles.body}>
