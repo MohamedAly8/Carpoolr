@@ -96,6 +96,7 @@ const stylesSidebar = StyleSheet.create({
     alignSelf: 'center',
     paddingHorizontal: 10,
     fontWeight: 'bold',
+    fontSize: 15,
   },
   profileHeaderLine: {
     height: 1,

@@ -11,6 +11,7 @@ import HomeScreen from './DrawerScreens/HomeScreen';
 import SettingsScreen from './DrawerScreens/SettingsScreen';
 import RideHistory from './DrawerScreens/RideHistory';
 import TourModeSelect from './DrawerScreens/TourModeSelect';
+import TourModeProceed from './DrawerScreens/TourModeProceed';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 
@@ -62,6 +63,31 @@ const HomeScreenStack = ({navigation}) => {
                           ),
               }}
             />
+       <Stack.Screen
+        name="TourModeProceed"
+        component={TourModeProceed}
+        options={{
+          title: 'Tour Mode Proceed', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#692ad5', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.popToTop()}
+                style={{ marginRight: 10 }}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancel Tour</Text>
+              </TouchableOpacity>
+            ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -143,6 +169,59 @@ const TourModeSelectStack = ({navigation}) => {
           ),
         }}
       />
+       <Stack.Screen
+        name="TourModeProceed"
+        component={TourModeProceed}
+        options={{
+          title: 'Tour Mode Proceed', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#692ad5', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.popToTop()}
+                style={{ marginRight: 10 }}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancel Tour</Text>
+              </TouchableOpacity>
+            ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+
+const TourModeProceedStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="TourModeProceed"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="TourModeProceed"
+        component={TourModeProceed}
+        options={{
+          title: 'TourModeProceed',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -180,6 +259,13 @@ const DrawerNavigatorRoutes = (props) => {
          options={{drawerLabel: 'Tour Mode'}}
          component={TourModeSelectStack}
            />
+    <Drawer.Screen
+             name="TourModeProceedStack"
+             options={{
+                 drawerItemStyle: { height: 0 }
+               }}
+             component={TourModeProceedStack}
+               />
     </Drawer.Navigator>
   );
 };

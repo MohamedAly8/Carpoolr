@@ -5,7 +5,7 @@ import {GOOGLE_MAPS_API_KEY} from "@env";
 import axios from 'axios';
 import MapView, {Marker} from 'react-native-maps';
 
-const TourModeSelect = () => {
+const TourModeSelect = ({navigation}) => {
   const [destinations, setDestinations] = useState([]);
   const [city, setcity] = useState(null);
   const [locations, setLocations] = useState([]);
@@ -14,7 +14,7 @@ const TourModeSelect = () => {
 
   const getTouristDestinations = (city) => {
 
-    const cityTrim = city.split(','[0].trim())[0];
+    const cityTrim = city.split(',')[0].trim();
     setcity(cityTrim);
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+${city}&key=${GOOGLE_MAPS_API_KEY}`)
     .then(response => {
@@ -50,6 +50,9 @@ const TourModeSelect = () => {
     .catch(error => console.log(error));
   };
 
+   const handleTourModeProceed = () => {
+      navigation.navigate('TourModeProceed', {city: city});
+    };
 
 
   return (
@@ -69,8 +72,11 @@ const TourModeSelect = () => {
         }}
         styles={{
           textInputContainer: styles.textInputContainer,
-          textInput: styles.textInput
-        }}
+          textInput: styles.textInput,
+          poweredContainer: { display: 'none' }, // hides powered by Google logo
+          listView: { zIndex: 9999 }, // sets z-index of listView to 9999
+        }
+        }
       />
       {destinations.length > 0 &&
         <View style={styles.destinationsContainer}>
@@ -82,7 +88,7 @@ const TourModeSelect = () => {
       }
 
       {mapRegion ? (
-      <View style={{flex: 5, borderRadius: 40, overflow: 'hidden'}}>
+      <View style={{flex: 5, borderRadius: 40, overflow: 'hidden', zIndex: -1}}>
       <MapView style={styles.map}
         region={mapRegion}
       >
@@ -93,16 +99,16 @@ const TourModeSelect = () => {
         </MapView>
         </View>
       ) : (
-          <View style={{ flex: 11, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size='large' color='#6026c2' />
-            <Text>
+          <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', zIndex: -999 }}>
+            <ActivityIndicator size='large' color='#6026c2' style={{zIndex: -1}} />
+            <Text style={{zIndex: -1}}>
                 Loading Your City's Top Spots
             </Text>
           </View>
       )}
       {city &&
       <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.submitbutton} >
+          <TouchableOpacity style={styles.submitbutton} onPress={handleTourModeProceed}>
             <Text style={styles.buttonText}>Find a Tour</Text>
           </TouchableOpacity>
       </View>
@@ -117,7 +123,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+
   },
   heading: {
     fontSize: 20,
@@ -142,6 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ede5fa',
     width: 380,
     marginBottom: 40,
+    zIndex: -1,
   },
   destinationsHeading: {
     fontSize: 20,
