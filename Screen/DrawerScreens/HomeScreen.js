@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
- import { Text, View, StyleSheet, TouchableOpacity, TextInput, PermissionsAndroid} from 'react-native';
+ import { Text, View, StyleSheet, TouchableOpacity, TextInput, PermissionsAndroid, Alert} from 'react-native';
  import AsyncStorage from '@react-native-async-storage/async-storage';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
@@ -40,6 +40,8 @@ export default function HomeScreen({navigation}) {
       latitude: details.geometry.location.lat,
       longitude: details.geometry.location.lng
     });
+
+
     const newRegion = {
           latitude: details.geometry.location.lat,
           longitude: details.geometry.location.lng,
@@ -50,8 +52,19 @@ export default function HomeScreen({navigation}) {
   }
 
  const handleTourModeSelect = () => {
-    navigation.navigate('TourModeSelect');
+    navigation.navigate('TourModeSelect', {city: city});
   };
+
+const handleRequestCarpool = () => {
+  if (selectedDestination !== null) {
+    navigation.navigate('RequestCarpool', {lat: selectedDestination.latitude,
+                                           long: selectedDestination.longitude,
+                                           destinationName: destination});
+  } else {
+    Alert.alert('Where are you going?', 'Please select a destination');
+  }
+};
+  console.log(destination);
 
   return (
     <View style={styles.container}>
@@ -151,7 +164,7 @@ export default function HomeScreen({navigation}) {
         </View>
         }
      <View style={styles.buttonContainer}>
-       <TouchableOpacity style={styles.button}>
+       <TouchableOpacity style={styles.button} onPress={handleRequestCarpool}>
          <Text style={styles.buttonText}>Request Carpool</Text>
        </TouchableOpacity>
 
@@ -168,7 +181,7 @@ export default function HomeScreen({navigation}) {
 
         </View>
 
-        <View style={{ flex: 1, borderRadius: 40, overflow: 'hidden' }}>
+        <View style={{ flex: 0.7, borderRadius: 40, overflow: 'hidden' }}>
        <MapView style={{ flex: 1, minHeight:50, marginLeft: 10, marginRight: 10, marginBottom: 10, borderRadius: 10}}
             ref={mapRef}
             provider={PROVIDER_GOOGLE}

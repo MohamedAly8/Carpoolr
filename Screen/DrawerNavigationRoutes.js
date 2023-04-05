@@ -12,6 +12,7 @@ import SettingsScreen from './DrawerScreens/SettingsScreen';
 import RideHistory from './DrawerScreens/RideHistory';
 import TourModeSelect from './DrawerScreens/TourModeSelect';
 import TourModeProceed from './DrawerScreens/TourModeProceed';
+import RequestCarpool from './DrawerScreens/RequestCarpool';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 
@@ -88,6 +89,32 @@ const HomeScreenStack = ({navigation}) => {
             ),
         }}
       />
+
+      <Stack.Screen
+              name="RequestCarpool"
+              component={RequestCarpool}
+              options={{
+                title: 'Requesting Carpool',
+                headerLeft: () => (
+                  <NavigationDrawerHeader navigationProps={navigation} />
+                ),
+                headerStyle: {
+                            backgroundColor: '#692ad5', //Set Header color
+                          },
+                          headerTintColor: '#fff', //Set Header text color
+                          headerTitleStyle: {
+                            fontWeight: 'bold', //Set Header text style
+              },
+                headerRight: () => (
+                      <TouchableOpacity
+                        onPress={() => navigation.popToTop()}
+                        style={{ marginRight: 10 }}
+                      >
+                        <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancel Carpool</Text>
+                      </TouchableOpacity>
+                    ),
+              }}
+            />
     </Stack.Navigator>
   );
 };
@@ -137,6 +164,33 @@ const RideHistoryStack = ({navigation}) => {
         component={RideHistory}
         options={{
           title: 'Ride History',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const RequestCarpoolStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="RequestCarpool"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="RequestCarpool"
+        component={RequestCarpool}
+        options={{
+          title: 'RequestCarpool',
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -265,6 +319,13 @@ const DrawerNavigatorRoutes = (props) => {
                  drawerItemStyle: { height: 0 }
                }}
              component={TourModeProceedStack}
+               />
+    <Drawer.Screen
+             name="RequestCarpoolStack"
+             options={{
+                 drawerItemStyle: { height: 0 }
+               }}
+             component={RequestCarpoolStack}
                />
     </Drawer.Navigator>
   );
