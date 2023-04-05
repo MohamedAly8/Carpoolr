@@ -56,22 +56,23 @@ export default function HomeScreen({navigation}) {
   };
 
 const handleRequestCarpool = () => {
-  if (selectedDestination !== null) {
+  if (selectedDestination !== null && selectedPickup !== null) {
     navigation.navigate('RequestCarpool', {lat: selectedDestination.latitude,
                                            long: selectedDestination.longitude,
                                            destinationName: destination});
   } else {
-    Alert.alert('Where are you going?', 'Please select a destination');
+    Alert.alert('Where are you going?', 'Please select a pick-up spot and destination');
   }
 };
 
 const handleOfferCarpool = () => {
-  if (selectedDestination !== null) {
+  if (selectedDestination !== null && selectedPickup !== null) {
     navigation.navigate('OfferCarpool', {lat: selectedDestination.latitude,
                                            long: selectedDestination.longitude,
-                                           destinationName: destination});
+                                           destinationName: destination,
+                                           fare: estimatedFare});
   } else {
-    Alert.alert('Where are you going?', 'Please select a destination');
+    Alert.alert('Where are you going?', 'Please select a pick-up spot and destination');
   }
 };
   console.log(destination);
