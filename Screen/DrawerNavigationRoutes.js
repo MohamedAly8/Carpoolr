@@ -1,7 +1,7 @@
 
 // Import React
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, Image} from 'react-native';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -13,6 +13,7 @@ import RideHistory from './DrawerScreens/RideHistory';
 import TourModeSelect from './DrawerScreens/TourModeSelect';
 import TourModeProceed from './DrawerScreens/TourModeProceed';
 import RequestCarpool from './DrawerScreens/RequestCarpool';
+import OfferCarpool from './DrawerScreens/OfferCarpool';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 
@@ -30,6 +31,17 @@ const HomeScreenStack = ({navigation}) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
+        headerRight: () => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('SettingsScreen')}
+                  style={{ marginRight: 10 }}
+                >
+                  <Image
+                          source={require('../Image/profile.png')} // Replace with the correct path to your image file
+                          style={{ width: 24, height: 24, tintColor: '#fff' }} // Set the desired width, height, and tint color for the image
+                        />
+                </TouchableOpacity>
+              ),
           headerStyle: {
             backgroundColor: '#692ad5', //Set Header color
           },
@@ -115,6 +127,61 @@ const HomeScreenStack = ({navigation}) => {
                     ),
               }}
             />
+
+        <Stack.Screen
+                name="OfferCarpool"
+                component={OfferCarpool}
+                options={{
+                  title: 'Offering Carpool',
+                  headerLeft: () => (
+                    <NavigationDrawerHeader navigationProps={navigation} />
+                  ),
+                  headerStyle: {
+                              backgroundColor: '#692ad5', //Set Header color
+                            },
+                            headerTintColor: '#fff', //Set Header text color
+                            headerTitleStyle: {
+                              fontWeight: 'bold', //Set Header text style
+                },
+                  headerRight: () => (
+                        <TouchableOpacity
+                          onPress={() => navigation.popToTop()}
+                          style={{ marginRight: 10 }}
+                        >
+                          <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancel Carpool</Text>
+                        </TouchableOpacity>
+                      ),
+                }}
+              />
+
+        <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                options={{
+                  title: 'Account Management',
+                  headerLeft: () => (
+                    <NavigationDrawerHeader navigationProps={navigation} />
+                  ),
+                  headerStyle: {
+                              backgroundColor: '#692ad5', //Set Header color
+                            },
+                            headerTintColor: '#fff', //Set Header text color
+                            headerTitleStyle: {
+                              fontWeight: 'bold', //Set Header text style
+                },
+                  headerRight: () => (
+                        <TouchableOpacity
+                          onPress={() => navigation.popToTop()}
+                          style={{ marginRight: 10 }}
+                        >
+                          <Image
+                        source={require('../Image/home.png')} // Replace with the correct path to your image file
+                        style={{ width: 24, height: 24, tintColor: '#fff' }} // Set the desired width, height, and tint color for the image
+                      />
+                        </TouchableOpacity>
+                      ),
+                }}
+              />
     </Stack.Navigator>
   );
 };
@@ -191,6 +258,33 @@ const RequestCarpoolStack = ({navigation}) => {
         component={RequestCarpool}
         options={{
           title: 'RequestCarpool',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const OfferCarpoolStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="OfferCarpool"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="OfferCarpool"
+        component={OfferCarpool}
+        options={{
+          title: 'OfferCarpool',
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -294,23 +388,38 @@ const DrawerNavigatorRoutes = (props) => {
 
       <Drawer.Screen
         name="HomeScreenStack"
-        options={{drawerLabel: 'Home Screen'}}
+        options={{
+        drawerLabel: 'Home Screen',
+        drawerActiveBackgroundColor: '#f6f0fe',
+        drawerActiveTintColor: '#692ad5',
+        }}
         component={HomeScreenStack}
       />
       <Drawer.Screen
         name="SettingScreenStack"
-        options={{drawerLabel: 'Setting Screen'}}
+        options={{
+        drawerLabel: 'Account Management',
+        drawerActiveBackgroundColor: '#f6f0fe',
+        drawerActiveTintColor: '#692ad5',
+
+        }}
         component={SettingScreenStack}
       />
       <Drawer.Screen
           name="RideHistoryStack"
-          options={{drawerLabel: 'Ride History'}}
+          options={{drawerLabel: 'Ride History',
+          drawerActiveBackgroundColor: '#f6f0fe',
+          drawerActiveTintColor: '#692ad5',
+          }}
           component={RideHistoryStack}
             />
 
      <Drawer.Screen
          name="TourModeSelectStack"
-         options={{drawerLabel: 'Tour Mode'}}
+         options={{drawerLabel: 'Tour Mode',
+         drawerActiveBackgroundColor: '#f6f0fe',
+         drawerActiveTintColor: '#692ad5',
+         }}
          component={TourModeSelectStack}
            />
     <Drawer.Screen
@@ -327,6 +436,14 @@ const DrawerNavigatorRoutes = (props) => {
                }}
              component={RequestCarpoolStack}
                />
+
+      <Drawer.Screen
+                   name="OfferCarpoolStack"
+                   options={{
+                       drawerItemStyle: { height: 0 }
+                     }}
+                   component={OfferCarpoolStack}
+                     />
     </Drawer.Navigator>
   );
 };

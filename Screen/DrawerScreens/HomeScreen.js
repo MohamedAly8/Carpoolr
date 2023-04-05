@@ -52,12 +52,22 @@ export default function HomeScreen({navigation}) {
   }
 
  const handleTourModeSelect = () => {
-    navigation.navigate('TourModeSelect', {city: city});
+    navigation.navigate('TourModeSelect' );
   };
 
 const handleRequestCarpool = () => {
   if (selectedDestination !== null) {
     navigation.navigate('RequestCarpool', {lat: selectedDestination.latitude,
+                                           long: selectedDestination.longitude,
+                                           destinationName: destination});
+  } else {
+    Alert.alert('Where are you going?', 'Please select a destination');
+  }
+};
+
+const handleOfferCarpool = () => {
+  if (selectedDestination !== null) {
+    navigation.navigate('OfferCarpool', {lat: selectedDestination.latitude,
                                            long: selectedDestination.longitude,
                                            destinationName: destination});
   } else {
@@ -168,7 +178,7 @@ const handleRequestCarpool = () => {
          <Text style={styles.buttonText}>Request Carpool</Text>
        </TouchableOpacity>
 
-       <TouchableOpacity style={styles.button}>
+       <TouchableOpacity style={styles.button} onPress={handleOfferCarpool}>
                 <Text style={styles.buttonText}>Offer Carpool</Text>
           </TouchableOpacity>
 

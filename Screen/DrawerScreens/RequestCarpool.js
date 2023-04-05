@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     margin: 10,
+    width: '70%',
   },
   carpoolText: {
     fontSize: 16,
