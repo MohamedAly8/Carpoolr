@@ -13,6 +13,7 @@ import RideHistory from './DrawerScreens/RideHistory';
 import TourModeSelect from './DrawerScreens/TourModeSelect';
 import TourModeProceed from './DrawerScreens/TourModeProceed';
 import RequestCarpool from './DrawerScreens/RequestCarpool';
+import FinishRequestCarpool from './DrawerScreens/FinishRequestCarpool';
 import OfferCarpool from './DrawerScreens/OfferCarpool';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
@@ -125,6 +126,32 @@ const HomeScreenStack = ({navigation}) => {
                         <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancel Carpool</Text>
                       </TouchableOpacity>
                     ),
+              }}
+            />
+
+      <Stack.Screen 
+              name="FinishRequestCarpool"
+              component={FinishRequestCarpool}
+              options={{
+                title: 'FinishRequestCarpool',
+                headerLeft: () => (
+                  <NavigationDrawerHeader navigationProps={navigation} />
+                ),
+                headerStyle: {
+                  backgroundColor: '#692ad5', //Set Header color
+                },
+                headerTintColor: '#fff', //Set Header text color
+                headerTitleStyle: {
+                  fontWeight: 'bold', //Set Header text style
+                },
+                headerRight: () => (
+                  <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    style={{ marginRight: 10 }}
+                  >
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Go Back</Text>
+                  </TouchableOpacity>
+                )
               }}
             />
 
@@ -263,9 +290,54 @@ const RequestCarpoolStack = ({navigation}) => {
           ),
         }}
       />
+
+      <Stack.Screen 
+        name="FinishRequestCarpool"
+        component={FinishRequestCarpool}
+        options={{
+          title: 'FinishRequestCarpool',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{ marginRight: 10 }}
+            />
+          )
+        }}
+      />
+        
     </Stack.Navigator>
   );
 };
+
+const FinishRequestCarpoolStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="FinishRequestCarpool"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="FinishRequestCarpool"
+        component={FinishRequestCarpool}
+        options={{
+          title: 'FinishRequestCarpool',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 const OfferCarpoolStack = ({navigation}) => {
   return (
@@ -438,12 +510,19 @@ const DrawerNavigatorRoutes = (props) => {
                />
 
       <Drawer.Screen
-                   name="OfferCarpoolStack"
-                   options={{
-                       drawerItemStyle: { height: 0 }
-                     }}
-                   component={OfferCarpoolStack}
-                     />
+        name="OfferCarpoolStack"
+        options={{
+            drawerItemStyle: { height: 0 }
+          }}
+        component={OfferCarpoolStack}
+          />
+      <Drawer.Screen
+        name="FinishRequestCarpoolStack"
+        options={{
+            drawerItemStyle: { height: 0 }
+          }}
+        component={FinishRequestCarpoolStack}
+          />
     </Drawer.Navigator>
   );
 };

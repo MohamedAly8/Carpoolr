@@ -41,7 +41,7 @@ const OfferCarpool = ({ route }) => {
             .then((data) => {
                 console.log(data);
                 if (data.candidates && data.candidates.length > 0 && data.candidates[0].photos) {
-                    console.log('heeeere')
+
                     const photoRef = data.candidates[0].photos[0].photo_reference;
                     // Call Google Places Photos API to retrieve the actual image
                     const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${GOOGLE_MAPS_API_KEY}`;
