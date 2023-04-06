@@ -70,7 +70,8 @@ const handleOfferCarpool = () => {
     navigation.navigate('OfferCarpool', {lat: selectedDestination.latitude,
                                            long: selectedDestination.longitude,
                                            destinationName: destination,
-                                           fare: estimatedFare});
+                                           fare: estimatedFare,
+                                           QR: false});
   } else {
     Alert.alert('Where are you going?', 'Please select a pick-up spot and destination');
   }

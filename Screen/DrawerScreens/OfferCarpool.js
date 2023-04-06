@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Slider, TextInput, Button, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TextInput, Button, TouchableOpacity, Image } from 'react-native';
 import {GOOGLE_MAPS_API_KEY} from "@env";
+import Slider from '@react-native-community/slider';
 
 
 const OfferCarpool = ({ route, navigation }) => {
-    const { lat, long, destinationName, fare } = route.params;
+    const { lat, long, destinationName, fare, QR } = route.params;
     const dest = destinationName.split(',')[0];
     const BaseFare = fare;
-
+    const isQR = QR;
     const [maxPassengers, setMaxPassengers] = useState(1);
     const [maxTimeDelay, setMaxTimeDelay] = useState(0);
     const [estimatedFare, setEstimatedFare] = useState(BaseFare);
     const [photoUrl, setPhotoUrl] = useState(null);
     const [loading, setLoading] = useState(true);
 
+
+    
+
+    // create Async Storage for boolean isQRCodeScanned initially set to false
+    // Define a function to set the initial value of `isQRCodeScanned`
 
     const onMaxPassengersChange = (value) => {
         setMaxPassengers(value);
@@ -32,32 +38,40 @@ const OfferCarpool = ({ route, navigation }) => {
         setEstimatedFare(Math.max(2, fare.toFixed(2)));
     }
 
-    const handleOfferCarpool = () => {
-        navigation.navigate('QRScan');
+    
+    const handleScanQRCode = () => {
+        navigation.navigate('QRScan', { 
+            lat: lat,
+            long: long,
+            destinationName: destinationName,
+            fare: estimatedFare,
+         });
     }
 
     useEffect(() => {
         // Call Google Places API to retrieve photo reference for the destination
-        const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${dest}&inputtype=textquery&fields=photos&key=${GOOGLE_MAPS_API_KEY}`;
+        const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${dest}&inputtype=textquery&fields=photos&key=${GOOGLE_MAPS_API_KEY}`;      
 
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                
                 if (data.candidates && data.candidates.length > 0 && data.candidates[0].photos) {
 
                     const photoRef = data.candidates[0].photos[0].photo_reference;
                     // Call Google Places Photos API to retrieve the actual image
                     const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${GOOGLE_MAPS_API_KEY}`;
                     setPhotoUrl(photoUrl);
-                    console.log(photoUrl);
+                    
                 } else {
                     console.log('No photos found for destination');
                 }
             })
             .catch((error) => console.log(error))
             .finally(() => setLoading(false));
-    }, [dest]);
+
+
+    }, [dest, navigation, QR]);
 
     return (
         <View style={styles.container}>
@@ -74,9 +88,32 @@ const OfferCarpool = ({ route, navigation }) => {
 
             </View>
 
+
+            <View style={styles.qrState}>
+    
+                {Boolean(isQR) ? 
+                <Text style={styles.qrtextSuccess}>QR Code successfully scanned</Text> : 
+                <Text style={styles.qrtextFail}>Scan the QR Code to Start Carpool</Text>}
+        
+                </View>
+
+            <View style={{
+            flex: 0.01,
+            height: 1,
+            backgroundColor: 'black',
+            alignSelf: 'stretch'
+        }} />
+
+                
+            
+            <View style={styles.modifymessage}>
+                <Text style={styles.modifytext}> Modify Your Carpool Settings </Text>
+            </View>
+
+
             <View style={styles.formContainer}>
 
-                <Text style={styles.modifytext}> Modify Your Carpool Settings </Text>
+                
 
 
                 <Text style={styles.label}>Max Passengers to Join: {maxPassengers}</Text>
@@ -87,6 +124,8 @@ const OfferCarpool = ({ route, navigation }) => {
                     step={1}
                     value={maxPassengers}
                     onValueChange={onMaxPassengersChange}
+                    thumbTintColor='#692ad5'
+                    minimumTrackTintColor='#692ad5'
                 />
                 <Text style={styles.label}>Estimated Travel Delay (minutes): {maxTimeDelay}</Text>
                 <Slider
@@ -96,18 +135,39 @@ const OfferCarpool = ({ route, navigation }) => {
                     step={1}
                     value={maxTimeDelay}
                     onValueChange={onMaxTimeDelayChange}
+                    thumbTintColor='#692ad5'
+                    minimumTrackTintColor='#692ad5'
                 />
                 <Text style={styles.fare}>Estimated Fare: ${estimatedFare}</Text>
-                <Text style={styles.savings}>You're Saving: ${(BaseFare-estimatedFare).toFixed(2)} !</Text>
+            
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.savings}>You're Saving: ${(BaseFare-estimatedFare).toFixed(2)} !</Text>
+            </View>
 
-                <View style={styles.buttonContainer}>
-                   <TouchableOpacity onPress={handleOfferCarpool}
-                   style={styles.button} >
-                         <Text style={styles.buttonText}>Submit</Text>
-                   </TouchableOpacity>
-                </View>
+            
 
             </View>
+
+            <View key={QR} style={styles.buttonContainer}>
+
+                
+                {!Boolean(isQR) && (
+                    <TouchableOpacity onPress={handleScanQRCode}
+                    style={styles.button} >
+                          <Text style={styles.buttonText}>Scan QR Code</Text>
+                    </TouchableOpacity>
+                )}
+
+                {Boolean(isQR) && (
+                
+                 <TouchableOpacity 
+                 style={styles.button} >
+                       <Text style={styles.buttonText}>Submit</Text>
+                 </TouchableOpacity>
+                )}
+            
+                   
+                </View>
         </View>
     );
 };
@@ -141,15 +201,22 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
+    modifymessage : {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
     modifytext: {
         fontSize: 20,
         color: 'black',
         fontWeight: 'bold',
         marginBottom: 20,
+        
 
     },
     formContainer: {
-        flex: 7,
+        flex: 3,
         width: '80%',
         justifyContent: 'center',
     },
@@ -164,13 +231,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     savings: {
-        fontSize: 20,
+        fontSize: 23,
         fontWeight: 'bold',
         marginBottom: 10,
         color: 'green'
     },
     slider: {
         marginBottom: 20,
+        
     },
       buttonContainer: {
         flexDirection: 'row',
@@ -199,6 +267,25 @@ const styles = StyleSheet.create({
           fontWeight: 'bold',
           textAlign: 'center',
         },
+        qrState: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        qrtextSuccess : {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            color: 'green'
+
+        },
+        qrtextFail : {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            color: 'red'
+        }
+
 });
 
 export default OfferCarpool;

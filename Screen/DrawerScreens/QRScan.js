@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text, Linking, View, Image, ImageBackground, BackHandler } from 'react-native';
+import React, { useState, useEffect, Fragment } from 'react';
+import { TouchableOpacity, Text, Linking, View, Image, ImageBackground, BackHandler, Dimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const QRScan = () => {
+const QRScan = ({navigation, route}) => {
     const [scan, setScan] = useState(false);
     const [scanResult, setScanResult] = useState(false);
     const [result, setResult] = useState(null);
+    const { lat, long, destinationName, fare } = route.params;
+
 
     const onSuccess = (e) => {
-        const check = e.data.substring(0, 4);
-        console.log('scanned data' + check);
+        console.log(
+            'scanned data' + e.data
+        );
         setResult(e)
         setScan(false)
         setScanResult(true)
-        if (check === 'http') {
-            Linking.openURL(e.data).catch(err => console.error('An error occured', err));
-        } else {
-            this.setState({
-                result: e,
-                scan: false,
-                ScanResult: true
-            });
-        }
+
+          navigation.navigate('OfferCarpool', {
+            lat: lat,
+            long: long,
+            destinationName: destinationName,
+            fare: fare,
+            QR: true,
+          });
+        
+    
     }
     const activeQR = () => {
        setScan(true);
@@ -31,68 +36,52 @@ const QRScan = () => {
         setScanResult(false)
     }
 
+    
+
     return (
         <View style={styles.scrollViewStyle}>
             <Fragment>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={()=> BackHandler.exitApp()}>
-                        <Image source={require('../Image/back.svg')} style={{height: 36, width: 36}}></Image>
+                        <Image source={require('../../Image/back.svg')} style={{height: 36, width: 36}}></Image>
                     </TouchableOpacity>
                     <Text style={styles.textTitle}>Scan QR Code</Text>
                 </View>
-                {!scan && !ScanResult &&
+                {!scan && !scanResult &&
                     <View style={styles.cardView} >
-                        <Image source={require('../Image/camera.png')} style={{height: 36, width: 36}}></Image>
+                        <Image source={require('../../Image/camera.png')} style={{height: 36, width: 36}}></Image>
                         <Text numberOfLines={8} style={styles.descText}>Please move your camera {"\n"} over the QR Code</Text>
-                        <Image source={require('../Image/qrcode.png')} style={{margin: 20}}></Image>
-                        <TouchableOpacity onPress={activeQR} style={styles.buttonScan}>
-                            <View style={styles.buttonWrapper}>
-                            <Image source={require('../Image/camera.png')} style={{height: 36, width: 36}}></Image>
-                            <Text style={{...styles.buttonTextStyle, color: '#2196f3'}}>Scan QR Code</Text>
-                            </View>
-                        </TouchableOpacity>
+                
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <QRCodeScanner
+                                reactivate={true}
+                                showMarker={true}
+                                ref={(node) => { this.scanner = node }}
+                                onRead={onSuccess}
+                                vibrate={false}
+                                cameraStyle={{ height: 400, width: 200, marginLeft:110 }}
+                              
+                            />
+                        </View>
                     </View>
                 }
-                {ScanResult &&
+                {scanResult &&
                     <Fragment>
                         <Text style={styles.textTitle1}>Result</Text>
-                        <View style={ScanResult ? styles.scanCardView : styles.cardView}>
+                        <View style={scanResult ? styles.scanCardView : styles.cardView}>
                             <Text>Type : {result.type}</Text>
                             <Text>Result : {result.data}</Text>
                             <Text numberOfLines={1}>RawData: {result.rawData}</Text>
                             <TouchableOpacity onPress={scanAgain} style={styles.buttonScan}>
                                 <View style={styles.buttonWrapper}>
-                                    <Image source={require('../Image/camera.png')} style={{height: 36, width: 36}}></Image>
+                                    <Image source={require('../../Image/camera.png')} style={{height: 36, width: 36}}></Image>
                                     <Text style={{...styles.buttonTextStyle, color: '#2196f3'}}>Click to scan again</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </Fragment>
                 }
-                {scan &&
-                    <QRCodeScanner
-                        reactivate={true}
-                        showMarker={true}
-                        ref={(node) => { this.scanner = node }}
-                        onRead={onSuccess}
-                        topContent={
-                            <Text style={styles.centerText}>
-                               Please move your camera {"\n"} over the QR Code
-                            </Text>
-                        }
-                        bottomContent={
-                            <View>
-                                <ImageBackground source={require('../Image/bottom-panel.png')} style={styles.bottomContent}>
-                                    <TouchableOpacity style={styles.buttonScan2}
-                                        onPress={() => this.scanner.reactivate()}
-                                        onLongPress={() => setScan(false)}>
-                                        <Image source={require('../Image/camera2.png')}></Image>
-                                    </TouchableOpacity>
-                                </ImageBackground>
-                            </View>
-                        }
-                    />
-                }
+                
             </Fragment>
         </View>
     );
