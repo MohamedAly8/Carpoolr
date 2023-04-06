@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, Slider, TextInput, Button, T
 import {GOOGLE_MAPS_API_KEY} from "@env";
 
 
-const OfferCarpool = ({ route }) => {
+const OfferCarpool = ({ route, navigation }) => {
     const { lat, long, destinationName, fare } = route.params;
     const dest = destinationName.split(',')[0];
     const BaseFare = fare;
@@ -30,6 +30,10 @@ const OfferCarpool = ({ route }) => {
         // You can customize this logic as per your requirements
         const fare = BaseFare - (passengers * 2) - (timeDelay * 0.5);
         setEstimatedFare(Math.max(2, fare.toFixed(2)));
+    }
+
+    const handleOfferCarpool = () => {
+        navigation.navigate('QRScan');
     }
 
     useEffect(() => {
@@ -97,7 +101,8 @@ const OfferCarpool = ({ route }) => {
                 <Text style={styles.savings}>You're Saving: ${(BaseFare-estimatedFare).toFixed(2)} !</Text>
 
                 <View style={styles.buttonContainer}>
-                   <TouchableOpacity style={styles.button} >
+                   <TouchableOpacity onPress={handleOfferCarpool}
+                   style={styles.button} >
                          <Text style={styles.buttonText}>Submit</Text>
                    </TouchableOpacity>
                 </View>
