@@ -17,6 +17,7 @@ import FinishRequestCarpool from './DrawerScreens/FinishRequestCarpool';
 import OfferCarpool from './DrawerScreens/OfferCarpool';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
+import QRScan from './DrawerScreens/QRScan';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -209,6 +210,21 @@ const HomeScreenStack = ({navigation}) => {
                       ),
                 }}
               />
+
+            <Stack.Screen
+                    name="QRScan"
+                    component={QRScan}
+                    options={{
+                      headerStyle: {
+                        backgroundColor: '#692ad5', //Set Header color
+                      },
+                      headerTintColor: '#fff', //Set Header text color
+                      headerTitleStyle: {
+                        fontWeight: 'bold', //Set Header text style
+                      },
+                      title: 'QR Scan', //Set Header Title
+                    }}
+                  />
     </Stack.Navigator>
   );
 };
@@ -234,6 +250,34 @@ const SettingScreenStack = ({navigation}) => {
         component={SettingsScreen}
         options={{
           title: 'Settings', //Set Header Title
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+
+const QRScanStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="QRScan"
+      screenOptions={{
+        headerLeft: () => (
+          <NavigationDrawerHeader navigationProps={navigation} />
+        ),
+        headerStyle: {
+          backgroundColor: '#692ad5', //Set Header color
+        },
+        headerTintColor: 'white', //Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', //Set Header text style
+        },
+      }}>
+      <Stack.Screen
+        name="QRScan"
+        component={QRScan}
+        options={{
+          title: 'QR Scan', //Set Header Title
         }}
       />
     </Stack.Navigator>
@@ -362,6 +406,20 @@ const OfferCarpoolStack = ({navigation}) => {
           ),
         }}
       />
+      <Stack.Screen
+                    name="QRScan"
+                    component={QRScan}
+                    options={{
+                      headerStyle: {
+                        backgroundColor: '#692ad5', //Set Header color
+                      },
+                      headerTintColor: '#fff', //Set Header text color
+                      headerTitleStyle: {
+                        fontWeight: 'bold', //Set Header text style
+                      },
+                      title: 'QR Scan', //Set Header Title
+                    }}
+                  />
     </Stack.Navigator>
   );
 };
@@ -522,6 +580,14 @@ const DrawerNavigatorRoutes = (props) => {
             drawerItemStyle: { height: 0 }
           }}
         component={FinishRequestCarpoolStack}
+          />
+   
+    <Drawer.Screen
+        name="QRScanStack"
+        options={{
+            drawerItemStyle: { height: 0 }
+          }}
+        component={QRScanStack}
           />
     </Drawer.Navigator>
   );
