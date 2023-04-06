@@ -76,7 +76,6 @@ const handleOfferCarpool = () => {
     Alert.alert('Where are you going?', 'Please select a pick-up spot and destination');
   }
 };
-  console.log(destination);
 
   return (
     <View style={styles.container}>
@@ -87,7 +86,7 @@ const handleOfferCarpool = () => {
       <View style={styles.body}>
         <Text style={styles.inputPrompts}> Where are you getting picked up? </Text>
         <GooglePlacesAutocomplete
-          placeholder="Where do you want to get picked up?"
+          placeholder="CN Tower"
           onPress={(data, details = null) => {
             setPickup(data.description);
             setSelectedPickup({
@@ -129,7 +128,7 @@ const handleOfferCarpool = () => {
             />
          <Text style={styles.inputPrompts} >Where do you want to go?</Text>
         <GooglePlacesAutocomplete
-          placeholder="Where do you want to go?"
+          placeholder="McMaster University"
           onPress={onDestinationSelect}
           query={{
             key: GOOGLE_MAPS_API_KEY,
@@ -248,14 +247,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#f8eef0',
+    backgroundColor: '#dbcbf5',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#b14e64',
+    color: '#692ad5',
     textAlign: 'center',
-
   },
   tourhead: {
     fontSize: 30,
@@ -319,6 +317,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 15,
         zIndex: -1,
+        color: 'black',
+        fontWeight: 'bold',
+        
 
 
    }

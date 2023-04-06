@@ -75,11 +75,13 @@ const RequestCarpool = ({ route, navigation }) => {
       {photoUrl && <Image source={{ uri: photoUrl }} style={styles.image} />}
       {carpools.map((carpool, index) => (
         <View key={index} style={styles.carpoolBox}>
-          <TouchableOpacity style={styles.joinbutton} onPress={() => navigation.navigate('FinishRequestCarpool', {carpool: carpool})}/>
+          <TouchableOpacity style={styles.joinbutton} onPress={() => navigation.navigate('FinishRequestCarpool', {carpool: carpool})}>
+            <Text style={styles.buttontext} >Join</Text>
+          </TouchableOpacity>
           <Text style={styles.carpoolText}>Carpool {index + 1}</Text>
           <Text style={styles.carpoolText}>Passenger Count: {carpool.passengers ? carpool.passengers.length : 0}</Text>
           <Text style={styles.carpoolText}>Max Passengers: {carpool.maxPassengers ? carpool.maxPassengers : 0}</Text>
-          <Text style={styles.carpoolText}>Passenger Names: {carpool.passengers ? carpool.passengers.join(', ') : 'None'}</Text>
+          <Text style={styles.carpoolText}>Passengers: {carpool.passengers ? carpool.passengers.join(', ') : 'None'}</Text>
         </View>
       ))}
       
@@ -103,11 +105,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     margin: 10,
-    width: '70%',
+    width: '80%',
+    backgroundColor: '#e3d7f7'
   },
   carpoolText: {
-    fontSize: 16,
+    fontSize: 18,
     marginVertical: 5,
+    color: 'black',
   },
   joinbutton: {
     backgroundColor: '#6026c2',
@@ -115,15 +119,23 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     position: 'absolute',
-    right: 0,
+    right: 5,
+    top: 5,
+    width: 70,
+    height: 35,
   },
   image: {
-    width: 250,
+    width: 300,
     height: 200,
     margin: 10,
     borderRadius: 5,
   },
-
+  buttontext: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  }
 });
 
 export default RequestCarpool;
