@@ -47,11 +47,13 @@ const TourModeStart = ({route, navigation}) => {
     } else {
       // Create a new tour
       const members = [name];
+      const RANDOMID  = Math.random().toString(36).substring(2, 6);
       firestore()
         .collection('ActiveTours')
-        .add({ city, members })
-        .then(() => {
-          setTour({city, members });
+        .add({city, members })
+        .then((docRef) => {
+          const newDocID = docRef.id;
+          setTour({id: newDocID, city, members });
         })
         .catch((error) => {
           console.error(error);
@@ -97,16 +99,29 @@ const TourModeStart = ({route, navigation}) => {
   // function handleEndTour to end a tour. Remove name from the database 
   const handleEndTour = () => {
     const updatedMembers = tour.members.filter((member) => member !== name);
-    firestore()
-      .collection('ActiveTours')
-      .doc(tour.id)
-      .update({ members: updatedMembers })
-      .then(() => {
-        setTour({ ...tour, members: updatedMembers });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (updatedMembers.length === 0) {
+      firestore()
+        .collection('ActiveTours')
+        .doc(tour.id)
+        .delete()
+        .then(() => {
+          setTour(null);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      firestore()
+        .collection('ActiveTours')
+        .doc(tour.id)
+        .update({ members: updatedMembers })
+        .then(() => {
+          setTour({ ...tour, members: updatedMembers });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
     // make an alert telling user message about tour ended
     Alert.alert(
         'Tour Ended',
