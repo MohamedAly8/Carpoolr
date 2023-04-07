@@ -141,7 +141,7 @@ const OfferCarpool = ({ route, navigation }) => {
                 <Text style={styles.fare}>Estimated Fare: ${estimatedFare}</Text>
             
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.savings}>You're Saving: ${(BaseFare-estimatedFare).toFixed(2)} !</Text>
+            <Text style={styles.savings}>You're Saving: ${(fare-estimatedFare).toFixed(2)} !</Text>
             </View>
 
             

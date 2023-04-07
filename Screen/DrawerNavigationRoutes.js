@@ -12,6 +12,7 @@ import SettingsScreen from './DrawerScreens/SettingsScreen';
 import RideHistory from './DrawerScreens/RideHistory';
 import TourModeSelect from './DrawerScreens/TourModeSelect';
 import TourModeProceed from './DrawerScreens/TourModeProceed';
+import TourModeStart from './DrawerScreens/TourModeStart';
 import RequestCarpool from './DrawerScreens/RequestCarpool';
 import FinishRequestCarpool from './DrawerScreens/FinishRequestCarpool';
 import OfferCarpool from './DrawerScreens/OfferCarpool';
@@ -225,6 +226,21 @@ const HomeScreenStack = ({navigation}) => {
                       title: 'QR Scan', //Set Header Title
                     }}
                   />
+        <Stack.Screen
+        name="TourModeStart"
+        component={TourModeStart}
+        options={{
+          headerStyle: {
+            backgroundColor: '#692ad5', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          title: 'Tour Mode Ongoing', //Set Header Title
+          headerLeft: ()=> null,
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -383,6 +399,31 @@ const FinishRequestCarpoolStack = ({navigation}) => {
   );
 }
 
+const TourModeStartStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="TourModeStart"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="TourModeStart"
+        component={TourModeStart}
+        options={{
+          title: 'TourModeStart',
+        
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const OfferCarpoolStack = ({navigation}) => {
   return (
     <Stack.Navigator
@@ -472,6 +513,14 @@ const TourModeSelectStack = ({navigation}) => {
             ),
         }}
       />
+      <Stack.Screen
+        name="TourModeStart"
+        component={TourModeStart}
+        options={{
+          title: 'TourModeStart',
+        
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -498,6 +547,14 @@ const TourModeProceedStack = ({navigation}) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
+        }}
+      />
+      <Stack.Screen
+        name="TourModeStart"
+        component={TourModeStart}
+        options={{
+          title: 'TourModeStart',
+        
         }}
       />
     </Stack.Navigator>
@@ -589,6 +646,7 @@ const DrawerNavigatorRoutes = (props) => {
           }}
         component={QRScanStack}
           />
+
     </Drawer.Navigator>
   );
 };

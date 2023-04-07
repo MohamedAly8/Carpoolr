@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
- import { Text, View, StyleSheet, TouchableOpacity, TextInput, PermissionsAndroid, Alert} from 'react-native';
- import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
+ import { Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
  import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
  import {GOOGLE_MAPS_API_KEY} from "@env";
 import auth from '@react-native-firebase/auth';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import Geolocation from 'react-native-geolocation-service';
 import { useFocusEffect } from '@react-navigation/native';
 
 
