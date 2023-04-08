@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Alert, Image} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_MAPS_API_KEY} from '@env';
 import auth from '@react-native-firebase/auth';
@@ -89,7 +89,9 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome back, {currentUser}!</Text>
+        <Text style={styles.headerText}>
+          Hello <Text style={{fontWeight: 'bold'}}>{currentUser}!</Text>
+        </Text>
       </View>
 
       <View style={styles.body}>
@@ -123,7 +125,7 @@ export default function HomeScreen({navigation}) {
               height: 40,
               borderWidth: 1,
               borderColor: '#ddd',
-              borderRadius: 20,
+              borderRadius: 15,
               paddingLeft: 10,
               marginBottom: 20,
             },
@@ -131,10 +133,12 @@ export default function HomeScreen({navigation}) {
               position: 'absolute',
               zIndex: 9999, // set the z-index to a high value to bring the dropdown to the front
               marginTop: 40, // adjust this value based on the height of the input container
-              backgroundColor: 'white',
+              backgroundColor: '#000',
               borderWidth: 1,
               borderColor: '#ddd',
-              borderRadius: 4,
+              alignSelf: 'center',
+              borderRadius: 15,
+              width: '90%',
             },
             poweredContainer: {
               display: 'none', // hide the "powered by Google" logo
@@ -156,14 +160,16 @@ export default function HomeScreen({navigation}) {
               marginTop: 5,
               flex: 1,
               alignSelf: 'center',
+              zIndex: -1,
             },
             textInput: {
               height: 40,
               borderWidth: 1,
               borderColor: '#ddd',
-              borderRadius: 20,
+              borderRadius: 15,
               paddingLeft: 10,
               marginBottom: 20,
+              zIndex: -1,
             },
 
             listView: {
@@ -174,6 +180,7 @@ export default function HomeScreen({navigation}) {
               borderWidth: 1,
               borderColor: '#ddd',
               borderRadius: 4,
+              width: '90%',
             },
             poweredContainer: {
               display: 'none', // hide the "powered by Google" logo
@@ -275,12 +282,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#dbcbf5',
-    marginBottom: 10,
+    marginLeft: 5,
   },
   headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 32,
     color: '#692ad5',
     textAlign: 'center',
   },
@@ -295,12 +300,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  promptText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#1E1E1E',
-    marginBottom: 20,
-  },
   buttonContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -310,8 +309,8 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   button: {
-    backgroundColor: '#692ad5',
-    borderRadius: 10,
+    backgroundColor: '#7455B7',
+    borderRadius: 20,
     width: '40%',
     height: 50,
     alignItems: 'center',
@@ -322,7 +321,7 @@ const styles = StyleSheet.create({
   },
   Tourbutton: {
     backgroundColor: '#b14e64',
-    borderRadius: 10,
+    borderRadius: 20,
     width: '40%',
     height: 50,
     alignItems: 'center',
@@ -340,10 +339,10 @@ const styles = StyleSheet.create({
   inputPrompts: {
     marginBottom: 5,
     marginTop: 5,
-    textAlign: 'center',
-    fontSize: 15,
+    marginLeft: 25,
+    textAlign: 'left',
+    fontSize: 16,
     zIndex: -1,
     color: 'black',
-    fontWeight: 'bold',
   },
 });
