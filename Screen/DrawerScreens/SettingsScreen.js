@@ -197,7 +197,7 @@ import { useNavigation } from '@react-navigation/native';
       ) : (
         <>
           <Text style={styles.label}>Password:</Text>
-          <Text style={styles.value, { marginRight: 10 }}>{getHiddenPassword(password)}</Text>
+          <Text style={[styles.value, { marginRight: 10 }]}>{getHiddenPassword(password)}</Text>
         </>
       )}
 

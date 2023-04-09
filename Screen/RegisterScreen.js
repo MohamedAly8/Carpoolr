@@ -20,7 +20,6 @@ const RegisterScreen = (props) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userAge, setUserAge] = useState('');
-  const [userAddress, setUserAddress] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
@@ -31,7 +30,6 @@ const RegisterScreen = (props) => {
 
   const emailInputRef = createRef();
   const ageInputRef = createRef();
-  const addressInputRef = createRef();
   const passwordInputRef = createRef();
 
   const handleSubmitButton = () => {
@@ -49,11 +47,7 @@ const RegisterScreen = (props) => {
       return;
     }
     AsyncStorage.setItem('age', userAge);
-    if (!userAddress) {
-      alert('Please fill Address');
-      return;
-    }
-    AsyncStorage.setItem('address', userAddress);
+
     if (!userPassword) {
       alert('Please fill Password');
       return;
@@ -217,22 +211,7 @@ const RegisterScreen = (props) => {
               blurOnSubmit={false}
             />
           </View>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserAddress) =>
-                setUserAddress(UserAddress)
-              }
-              underlineColorAndroid="#f000"
-              placeholder="Enter Address"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              ref={addressInputRef}
-              returnKeyType="next"
-              onSubmitEditing={Keyboard.dismiss}
-              blurOnSubmit={false}
-            />
-          </View>
+
           {errortext != '' ? (
             <Text style={styles.errorTextStyle}>
               {errortext}

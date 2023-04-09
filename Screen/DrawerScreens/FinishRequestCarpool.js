@@ -15,7 +15,7 @@ return (
         
         <ActivityIndicator size="large" color="#0000ff" />
 
-        <TouchableOpacity style={styles.returnhomebutton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.returnhomebutton} onPress={() => navigation.navigate('HomeScreen')}>
             <Text style={styles.buttontext}>Return to Home</Text>
         </TouchableOpacity>
         
