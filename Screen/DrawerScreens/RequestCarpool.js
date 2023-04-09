@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     width: '45%',
-    backgroundColor: '#efe8fa',
+    backgroundColor: '#ede5fa',
     flexBasis: '45%',
   },
   carpoolText: {
