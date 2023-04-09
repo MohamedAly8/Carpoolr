@@ -343,5 +343,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     zIndex: -1,
     color: 'black',
+    fontWeight: '500',
   },
 });
