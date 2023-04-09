@@ -175,9 +175,9 @@ export default function HomeScreen({navigation}) {
               position: 'absolute',
               zIndex: 9999, // set the z-index to a high value to bring the dropdown to the front
               marginTop: 40, // adjust this value based on the height of the input container
-              backgroundColor: 'white',
               borderWidth: 1,
               borderColor: '#ddd',
+              alignSelf: 'center',
               borderRadius: 4,
               width: '90%',
             },
