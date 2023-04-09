@@ -194,11 +194,12 @@ export default function HomeScreen({navigation}) {
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: -1,
+              marginTop: -30,
             }}>
-            <Text style={{fontSize: 20}}>
+            <Text style={{fontSize: 16}}>
               Distance: {tripDistance} km | Time: {tripDuration} min
             </Text>
-            <Text style={{fontSize: 20, marginBottom: 10}}>
+            <Text style={{fontSize: 16, marginBottom: 0}}>
               {' '}
               Estimated Fare: ${estimatedFare}{' '}
             </Text>
@@ -279,8 +280,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingVertical: 20,
     marginLeft: 5,
   },
   headerText: {
@@ -305,6 +305,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: -20,
     zIndex: -1,
   },
   button: {
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 5,
     marginRight: 5,
     marginLeft: 5,
   },
