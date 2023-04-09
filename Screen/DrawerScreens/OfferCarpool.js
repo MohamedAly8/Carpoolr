@@ -92,8 +92,9 @@ const OfferCarpool = ({route, navigation}) => {
         style={{
           flex: 0.01,
           height: 1,
-          backgroundColor: 'black',
-          alignSelf: 'stretch',
+          backgroundColor: '#b8b8b8',
+          width: '95%',
+          alignSelf: 'center',
         }}
       />
 
@@ -102,9 +103,7 @@ const OfferCarpool = ({route, navigation}) => {
       </View>
 
       <View style={styles.formContainer}>
-        <Text style={styles.label}>
-          Max Passengers to Join: {maxPassengers}
-        </Text>
+        <Text style={styles.label}>Max Passengers: {maxPassengers}</Text>
         <Slider
           style={styles.slider}
           minimumValue={1}
@@ -116,7 +115,7 @@ const OfferCarpool = ({route, navigation}) => {
           minimumTrackTintColor="#692ad5"
         />
         <Text style={styles.label}>
-          Estimated Travel Delay (minutes): {maxTimeDelay}
+          Estimated Travel Delay: {maxTimeDelay} minutes
         </Text>
         <Slider
           style={styles.slider}
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: 600,
   },
   destinationtext: {
     fontSize: 30,
@@ -225,7 +224,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   button: {
-    backgroundColor: '#692ad5',
+    backgroundColor: '#7455B7',
     borderRadius: 10,
     width: '50%',
     height: 50,
@@ -250,13 +249,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'green',
+    color: '#green',
   },
   qrtextFail: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'red',
+    color: '#c93253',
   },
 });
 
