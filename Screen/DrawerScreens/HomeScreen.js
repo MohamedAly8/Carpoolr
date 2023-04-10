@@ -91,6 +91,20 @@ export default function HomeScreen({navigation}) {
     }
   };
 
+  const handleReoccurringRide = () => {
+    if (selectedDestination !== null && selectedPickup !== null) {
+      navigation.navigate('ReoccurringRide', {
+        destinationName: destination,
+        pickupLocation: pickupLocation,
+      });
+    } else {
+      Alert.alert(
+        'Where are you going?',
+        'Please select a pick-up spot and destination',
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -226,6 +240,12 @@ export default function HomeScreen({navigation}) {
             onPress={handleTourModeSelect}>
             <Text style={styles.buttonText}>Try Tour Mode</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.Tourbutton}
+            onPress={handleReoccurringRide}>
+            <Text style={styles.buttonText1}>Set Reoccurring Ride</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -336,6 +356,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonText1: {
+    padding: 2,
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',

@@ -19,6 +19,7 @@ import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 import QRScan from './DrawerScreens/QRScan';
 import OnGoingRide from './DrawerScreens/OnGoingRide';
+import ReoccurringRide from './DrawerScreens/ReoccurringRide';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -267,6 +268,47 @@ const HomeScreenStack = ({navigation}) => {
             fontWeight: 'bold', //Set Header text style
           },
           title: 'Ride History', //Set Header Title
+        }}
+      />
+      <Stack.Screen
+        name="ReoccurringRide"
+        component={ReoccurringRide}
+        options={{
+          headerStyle: {
+            backgroundColor: '#692ad5', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          title: 'Reoccurring Ride', //Set Header Title
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ReoccurringRideStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ReoccurringRide"
+      screenOptions={{
+        headerLeft: () => (
+          <NavigationDrawerHeader navigationProps={navigation} />
+        ),
+        headerStyle: {
+          backgroundColor: '#692ad5', //Set Header color
+        },
+        headerTintColor: 'white', //Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', //Set Header text style
+        },
+      }}>
+      <Stack.Screen
+        name="ReoccurringRide"
+        component={ReoccurringRide}
+        options={{
+          title: 'Reoccurring Ride', //Set Header Title
         }}
       />
     </Stack.Navigator>
@@ -702,6 +744,14 @@ const DrawerNavigatorRoutes = props => {
           drawerItemStyle: {height: 0},
         }}
         component={OnGoingRideStack}
+      />
+
+      <Drawer.Screen
+        name="ReoccurringRideStack"
+        options={{
+          drawerItemStyle: {height: 0},
+        }}
+        component={ReoccurringRideStack}
       />
     </Drawer.Navigator>
   );
