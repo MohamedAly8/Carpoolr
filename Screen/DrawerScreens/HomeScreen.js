@@ -75,8 +75,10 @@ export default function HomeScreen({navigation}) {
         lat: selectedDestination.latitude,
         long: selectedDestination.longitude,
         destinationName: destination,
+        pickupLocation: pickupLocation,
         fare: estimatedFare,
         QR: false,
+        user: currentUser,
       });
     } else {
       Alert.alert(
