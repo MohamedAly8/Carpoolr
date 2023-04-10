@@ -11,11 +11,28 @@ import firestore from '@react-native-firebase/firestore';
 import {GOOGLE_MAPS_API_KEY} from '@env';
 
 const RequestCarpool = ({route, navigation}) => {
-  const {lat, long, destinationName} = route.params;
+  const {lat, long, destinationName, pickupLocation, fare, user} = route.params;
   const [carpools, setCarpools] = useState([]);
   const [loading, setLoading] = useState(true);
   const dest = destinationName.split(',')[0];
   const [photoUrl, setPhotoUrl] = useState(null);
+
+  const handleJoinCarpool = () => {
+    navigation.navigate('FinishRequestCarpool');
+
+    firestore()
+      .collection('RideHistory')
+      .add({
+        TripTime: firestore.Timestamp.now(),
+        dropOffLocation: destinationName,
+        fare: fare,
+        pickupLocation: pickupLocation,
+        username: user,
+      })
+      .then(() => {
+        console.log('Ride added to ride History');
+      });
+  };
 
   useEffect(() => {
     // Fetch carpools from Firestore
@@ -97,9 +114,7 @@ const RequestCarpool = ({route, navigation}) => {
             </Text>
             <TouchableOpacity
               style={styles.joinbutton}
-              onPress={() =>
-                navigation.navigate('FinishRequestCarpool', {carpool: carpool})
-              }>
+              onPress={handleJoinCarpool}>
               <Text style={styles.buttontext}>Join</Text>
             </TouchableOpacity>
           </View>
