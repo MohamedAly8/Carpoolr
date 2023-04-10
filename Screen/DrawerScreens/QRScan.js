@@ -13,7 +13,7 @@ const QRScan = ({navigation, route}) => {
   const [scan, setScan] = useState(false);
   const [scanResult, setScanResult] = useState(false);
   const [result, setResult] = useState(null);
-  const {lat, long, destinationName, fare} = route.params;
+  const {lat, long, destinationName, pickupLocation, fare, user} = route.params;
 
   const onSuccess = e => {
     console.log('scanned data' + e.data);
@@ -25,8 +25,10 @@ const QRScan = ({navigation, route}) => {
       lat: lat,
       long: long,
       destinationName: destinationName,
+      pickupLocation: pickupLocation,
       fare: fare,
       QR: true,
+      user: user,
     });
   };
   const activeQR = () => {

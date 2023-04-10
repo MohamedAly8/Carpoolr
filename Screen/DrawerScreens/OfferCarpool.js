@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {GOOGLE_MAPS_API_KEY} from '@env';
 import Slider from '@react-native-community/slider';
+import firestore from '@react-native-firebase/firestore';
 
 const OfferCarpool = ({route, navigation}) => {
-  const {lat, long, destinationName, fare, QR} = route.params;
+  const {lat, long, destinationName, pickupLocation, fare, QR, user} =
+    route.params;
   const dest = destinationName.split(',')[0];
   const BaseFare = fare;
   const isQR = QR;
@@ -13,7 +15,6 @@ const OfferCarpool = ({route, navigation}) => {
   const [estimatedFare, setEstimatedFare] = useState(BaseFare);
   const [photoUrl, setPhotoUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-
   // create Async Storage for boolean isQRCodeScanned initially set to false
   // Define a function to set the initial value of `isQRCodeScanned`
 
@@ -39,8 +40,32 @@ const OfferCarpool = ({route, navigation}) => {
       lat: lat,
       long: long,
       destinationName: destinationName,
+      pickupLocation: pickupLocation,
       fare: estimatedFare,
+      user: user,
     });
+  };
+
+  const handleSubmitOffer = () => {
+    navigation.navigate('OnGoingRide', {
+      currentUser: user,
+      pickupLocation: pickupLocation,
+      fare: fare,
+      dropOffLocation: destinationName,
+    });
+
+    firestore()
+      .collection('RideHistory')
+      .add({
+        TripTime: firestore.Timestamp.now(),
+        dropOffLocation: destinationName,
+        fare: fare,
+        pickupLocation: pickupLocation,
+        username: user,
+      })
+      .then(() => {
+        console.log('Ride added to ride History');
+      });
   };
 
   useEffect(() => {
@@ -144,7 +169,7 @@ const OfferCarpool = ({route, navigation}) => {
         )}
 
         {Boolean(isQR) && (
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSubmitOffer}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         )}
