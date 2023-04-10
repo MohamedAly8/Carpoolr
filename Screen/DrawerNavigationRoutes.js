@@ -19,6 +19,7 @@ import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 import QRScan from './DrawerScreens/QRScan';
 import OnGoingRide from './DrawerScreens/OnGoingRide';
+import PassengerRatingForm from './DrawerScreens/PassengerRatingForm';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -135,6 +136,31 @@ const HomeScreenStack = ({navigation}) => {
         component={FinishRequestCarpool}
         options={{
           title: 'FinishRequestCarpool',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#692ad5', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{marginRight: 10}}>
+              <Text style={{color: '#fff', fontWeight: 'bold'}}>Go Back</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="PassengerRatingForm"
+        component={PassengerRatingForm}
+        options={{
+          title: 'PassengerRatingForm',
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -421,6 +447,23 @@ const RequestCarpoolStack = ({navigation}) => {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="PassengerRatingForm"
+        component={PassengerRatingForm}
+        options={{
+          title: 'PassengerRatingForm',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{marginRight: 10}}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -445,6 +488,57 @@ const FinishRequestCarpoolStack = ({navigation}) => {
           title: 'FinishRequestCarpool',
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="PassengerRatingForm"
+        component={PassengerRatingForm}
+        options={{
+          title: 'PassengerRatingForm',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{marginRight: 10}}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const PassengerRatingFormStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="PassengerRatingForm"
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#692ad5',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+
+      <Stack.Screen
+        name="PassengerRatingForm"
+        component={PassengerRatingForm}
+        options={{
+          title: 'PassengerRatingForm',
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{marginRight: 10}}
+            />
           ),
         }}
       />
@@ -686,6 +780,14 @@ const DrawerNavigatorRoutes = props => {
           drawerItemStyle: {height: 0},
         }}
         component={FinishRequestCarpoolStack}
+      />
+
+      <Drawer.Screen
+        name="PassengerRatingFormStack"
+        options={{
+          drawerItemStyle: {height: 0},
+        }}
+        component={PassengerRatingFormStack}
       />
 
       <Drawer.Screen
