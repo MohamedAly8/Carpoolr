@@ -31,12 +31,16 @@ Scalability or Extensibility Requirements: Our system can handle 100 riders conc
 
 Longevity Requirements: Our system is built with modular components, making it easier to replace or update individual parts as needed.
 
-## Installation
+## Installation and Running of the App
 
 - clone the repository
-- Setup android emulator in Android Studio
+- Setup android emulator in Android Studio following: https://reactnative.dev/docs/environment-setup
+- Cd into root app directory
 - `npm install` 
+- `export GOOGLE_MAPS_API_KEY=YOUR_API_KEY`
+- Have `GOOGLE_MAPS_API_KEY=YOUR_API_KEY` in your .env file
 - `npx react-native start`
+
 
 
 ## Support
