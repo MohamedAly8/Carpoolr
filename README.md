@@ -49,10 +49,10 @@ If you have any questions or concerns about the Carpoolr Ride Sharing App, pleas
 ## Contributors
 Carpoolr was created by a team of experienced developers who are passionate about making commuting more sustainable and enjoyable. Our team includes:
 
-Mohamed Aly
-Adam Podolak
-Payton Chen
-Isra Zahid
+<p align="center">
+  <img src="Image/Contributions.png">
+</p>
+
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
