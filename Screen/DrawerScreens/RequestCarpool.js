@@ -16,9 +16,14 @@ const RequestCarpool = ({route, navigation}) => {
   const [loading, setLoading] = useState(true);
   const dest = destinationName.split(',')[0];
   const [photoUrl, setPhotoUrl] = useState(null);
+  // passengers use state 
+  const [passengers, setPassengers] = useState([]);
+  const [currentFare, setCurrentFare] = useState(null);
+  
 
   const handleJoinCarpool = () => {
-    navigation.navigate('FinishRequestCarpool');
+    // await for setCurrentFare to update 
+
 
     firestore()
       .collection('RideHistory')
@@ -36,6 +41,7 @@ const RequestCarpool = ({route, navigation}) => {
 
   useEffect(() => {
     // Fetch carpools from Firestore
+    
     const fetchCarpools = async () => {
       try {
         const carpoolsSnapshot = await firestore()
@@ -76,7 +82,7 @@ const RequestCarpool = ({route, navigation}) => {
     };
 
     fetchCarpools();
-  }, [lat, long]);
+  }, [lat, long, currentFare]);
 
   console.log(carpools);
   console.log(destinationName);
@@ -112,13 +118,19 @@ const RequestCarpool = ({route, navigation}) => {
               Passengers:{' '}
               {carpool.passengers ? carpool.passengers.join(', ') : 'None'}
             </Text>
+            
+            <Text style={styles.carpoolText}>Fare: ${carpool.currentFare}</Text>
             <TouchableOpacity
               style={styles.joinbutton}
 
-              onPress={() =>
-                navigation.navigate('FinishRequestCarpool', {passengers: carpool.passengers, 
-                                                             fare: carpool.currentFare})
-                }>
+              onPress={() => {
+                // setPassengers to be carpool.passengers then run function handleJoinCarpool
+
+                navigation.navigate('FinishRequestCarpool', {passengers: carpool.passengers,
+                                                             fare: carpool.currentFare});
+                console.log('Route to Rating Page');
+                 handleJoinCarpool();
+              }}>
 
               <Text style={styles.buttontext}>Join</Text>
             </TouchableOpacity>

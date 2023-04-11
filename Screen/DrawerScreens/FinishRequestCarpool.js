@@ -21,8 +21,8 @@ const FinishRequestCarpool = ({navigation, route }) => {
     if (showOngoingRideScreen) {
         return (
             <View style={styles.container}>
-                <Text>Your Ride is Currently Ongoing</Text>
-                <Text>Your Fare is: {fare}</Text>
+                <Text style={styles.faretext}>Your Ride is Currently Ongoing</Text>
+                <Text style={styles.faretext}>Your Fare is: ${fare}</Text>
                 
                 <ActivityIndicator size="large" color="#0000ff" />
         
@@ -33,8 +33,9 @@ const FinishRequestCarpool = ({navigation, route }) => {
     } else {
         return (
             <View style={styles.container}>
+                <Text style={styles.header}>You have Arrived!</Text>
                 <Text style={styles.header}>Rate Your Carpool Passengers</Text>
-                <View style={styles.ratingcontainer}>
+             
                 {passengers.map((passenger, index) => (
                     <View key={index} style={styles.passengerContainer}>
                         <Text style={styles.ratenametext}>Rate {passenger}</Text>
@@ -48,6 +49,11 @@ const FinishRequestCarpool = ({navigation, route }) => {
                     </View>
                 ))}
 
+      
+
+                <View style={styles.farecontainer}>
+                    <Text style={styles.fareheader}>Present Fare to Driver</Text>
+                    <Text style={styles.faretext}>Fare: ${fare}</Text>
                 </View>
 
                 <TouchableOpacity style={styles.returnhomebutton} onPress={() => navigation.navigate('HomeScreen')}>
@@ -67,6 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     passengerContainer: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
@@ -98,7 +105,31 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         fontWeight: 'bold',
-    }
+    },
+    ratingcontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    farecontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    fareheader: {
+        fontSize: 20,
+        marginBottom: 10,
+        color: 'black',
+        fontWeight: 400,
+        marginTop: 20,
+    },
+    faretext: {
+        fontSize: 25,
+        marginBottom: 10,
+        color: 'black',
+        fontWeight: 400,
+    },
+
 });
 
 export default FinishRequestCarpool;

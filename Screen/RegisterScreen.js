@@ -204,10 +204,7 @@ const RegisterScreen = (props) => {
               keyboardType="numeric"
               ref={ageInputRef}
               returnKeyType="next"
-              onSubmitEditing={() =>
-                addressInputRef.current &&
-                addressInputRef.current.focus()
-              }
+            
               blurOnSubmit={false}
             />
           </View>
