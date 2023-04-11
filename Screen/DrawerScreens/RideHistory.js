@@ -23,7 +23,14 @@ export default function RideHistory({navigation}) {
           .where('username', '==', currentUser)
           .get();
         const rideHistoryData = rideHistorySnapshot.docs.map(doc => doc.data());
-        setRides(rideHistoryData);
+        console.log(rideHistoryData);
+        setRides(
+          rideHistoryData.sort(function (a, b) {
+            return (
+              b.TripTime.toDate().getTime() - a.TripTime.toDate().getTime()
+            );
+          }),
+        );
         setLoading(false);
       } catch (error) {
         console.error('Error fetching ride history', error);
