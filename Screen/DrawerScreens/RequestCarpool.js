@@ -114,7 +114,12 @@ const RequestCarpool = ({route, navigation}) => {
             </Text>
             <TouchableOpacity
               style={styles.joinbutton}
-              onPress={handleJoinCarpool}>
+
+              onPress={() =>
+                navigation.navigate('FinishRequestCarpool', {passengers: carpool.passengers, 
+                                                             fare: carpool.currentFare})
+                }>
+
               <Text style={styles.buttontext}>Join</Text>
             </TouchableOpacity>
           </View>

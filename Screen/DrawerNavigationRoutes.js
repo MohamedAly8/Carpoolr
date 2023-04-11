@@ -155,6 +155,7 @@ const HomeScreenStack = ({navigation}) => {
         }}
       />
 
+
       <Stack.Screen
         name="OfferCarpool"
         component={OfferCarpool}
@@ -421,6 +422,7 @@ const RequestCarpoolStack = ({navigation}) => {
           ),
         }}
       />
+
     </Stack.Navigator>
   );
 };
@@ -448,9 +450,11 @@ const FinishRequestCarpoolStack = ({navigation}) => {
           ),
         }}
       />
+
     </Stack.Navigator>
   );
 };
+
 
 const TourModeStartStack = ({navigation}) => {
   return (
