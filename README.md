@@ -44,7 +44,7 @@ Longevity Requirements: Our system is built with modular components, making it e
 
 
 ## Support
-If you have any questions or concerns about the Carpoolr Ride Sharing App, please contact our support team at support@carpoolr.com.
+If you have any questions or concerns about the Carpoolr Ride Sharing App, please contact our support team at 08alym@gmail.com
 
 ## Contributors
 Carpoolr was created by a team of experienced developers who are passionate about making commuting more sustainable and enjoyable. Our team includes:
