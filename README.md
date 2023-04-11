@@ -37,7 +37,7 @@ Longevity Requirements: Our system is built with modular components, making it e
 - Setup android emulator in Android Studio following: https://reactnative.dev/docs/environment-setup
 - Cd into root app directory
 - `npm install` 
-- `export GOOGLE_MAPS_API_KEY=YOUR_API_KEY`
+- `export GOOGLE_MAPS_API_KEY=YOUR_API_KEY` in terminal window. Ensure it is set before running the app
 - Have `GOOGLE_MAPS_API_KEY=YOUR_API_KEY` in your .env file
 - `npx react-native start`
 
