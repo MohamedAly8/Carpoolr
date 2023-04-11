@@ -15,15 +15,10 @@ const RequestCarpool = ({route, navigation}) => {
   const [carpools, setCarpools] = useState([]);
   const [loading, setLoading] = useState(true);
   const dest = destinationName.split(',')[0];
-  const [photoUrl, setPhotoUrl] = useState(null);
-  // passengers use state 
-  const [passengers, setPassengers] = useState([]);
-  const [currentFare, setCurrentFare] = useState(null);
-  
+  const [photoUrl, setPhotoUrl] = useState(null);  
 
   const handleJoinCarpool = () => {
-    // await for setCurrentFare to update 
-
+    
 
     firestore()
       .collection('RideHistory')
@@ -82,7 +77,7 @@ const RequestCarpool = ({route, navigation}) => {
     };
 
     fetchCarpools();
-  }, [lat, long, currentFare]);
+  }, [lat, long]);
 
   console.log(carpools);
   console.log(destinationName);
