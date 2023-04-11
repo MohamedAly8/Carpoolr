@@ -134,10 +134,8 @@ const HomeScreenStack = ({navigation}) => {
         name="FinishRequestCarpool"
         component={FinishRequestCarpool}
         options={{
-          title: 'FinishRequestCarpool',
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
+          title: 'Rate Your Carpoolers',
+
           headerStyle: {
             backgroundColor: '#692ad5', //Set Header color
           },
@@ -145,13 +143,6 @@ const HomeScreenStack = ({navigation}) => {
           headerTitleStyle: {
             fontWeight: 'bold', //Set Header text style
           },
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{marginRight: 10}}>
-              <Text style={{color: '#fff', fontWeight: 'bold'}}>Go Back</Text>
-            </TouchableOpacity>
-          ),
         }}
       />
 
@@ -253,6 +244,16 @@ const HomeScreenStack = ({navigation}) => {
           },
           title: 'Ongoing Ride', //Set Header Title
           headerLeft: () => null,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{marginRight: 10}}>
+              <Image
+                source={require('../Image/home.png')} // Replace with the correct path to your image file
+                style={{width: 24, height: 24, tintColor: '#fff'}} // Set the desired width, height, and tint color for the image
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
 
@@ -268,6 +269,16 @@ const HomeScreenStack = ({navigation}) => {
             fontWeight: 'bold', //Set Header text style
           },
           title: 'Ride History', //Set Header Title
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={{marginRight: 10}}>
+              <Image
+                source={require('../Image/home.png')} // Replace with the correct path to your image file
+                style={{width: 24, height: 24, tintColor: '#fff'}} // Set the desired width, height, and tint color for the image
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Stack.Navigator>
@@ -316,6 +327,16 @@ const OnGoingRideStack = ({navigation}) => {
         headerTitleStyle: {
           fontWeight: 'bold', //Set Header text style
         },
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => navigation.popToTop()}
+            style={{marginRight: 10}}>
+            <Image
+              source={require('../Image/home.png')} // Replace with the correct path to your image file
+              style={{width: 24, height: 24, tintColor: '#fff'}} // Set the desired width, height, and tint color for the image
+            />
+          </TouchableOpacity>
+        ),
       }}>
       <Stack.Screen
         name="OnGoingRide"
@@ -323,6 +344,8 @@ const OnGoingRideStack = ({navigation}) => {
         options={{
           title: 'Ongoing Ride', //Set Header Title
         }}
+        // add home button on right
+
       />
     </Stack.Navigator>
   );

@@ -33,10 +33,11 @@ const FinishRequestCarpool = ({navigation, route }) => {
     } else {
         return (
             <View style={styles.container}>
-                <Text>Rate Your Carpool Passengers</Text>
+                <Text style={styles.header}>Rate Your Carpool Passengers</Text>
+                <View style={styles.ratingcontainer}>
                 {passengers.map((passenger, index) => (
                     <View key={index} style={styles.passengerContainer}>
-                        <Text>Rate {passenger}</Text>
+                        <Text style={styles.ratenametext}>Rate {passenger}</Text>
                         <Rating
                         type='star'
                         ratingCount={5}
@@ -46,6 +47,8 @@ const FinishRequestCarpool = ({navigation, route }) => {
                         />
                     </View>
                 ))}
+
+                </View>
 
                 <TouchableOpacity style={styles.returnhomebutton} onPress={() => navigation.navigate('HomeScreen')}>
                     <Text style={styles.buttontext}>Submit</Text>
@@ -67,6 +70,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
+    
     },
     returnhomebutton: {
         backgroundColor: '#692ad5',
@@ -85,6 +89,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
+    ratenametext: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+        marginRight: 20,
+    },
+    header: {
+        fontSize: 25,
+        fontWeight: 'bold',
+    }
 });
 
 export default FinishRequestCarpool;

@@ -50,13 +50,13 @@ export default function RideHistory({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Recent Rides</Text>
+      <Text style={styles.text}>Your Recent Rides</Text>
 
       <ScrollView contentContainerStyle={{width: screenWidth - 50}}>
         {rides.map((ride, index) => (
           <View key={index} style={styles.rideBox}>
             <Text style={styles.text1}>
-              {' '}
+              Carpool on {''}
               {new Date(
                 ride.TripTime.toDate().getTime() -
                   estOffset * 1000 -
