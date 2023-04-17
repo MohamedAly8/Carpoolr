@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {GOOGLE_MAPS_API_KEY} from '@env';
 import Slider from '@react-native-community/slider';
 import firestore from '@react-native-firebase/firestore';
+import { max } from 'react-native-reanimated';
 
 const OfferCarpool = ({route, navigation}) => {
   const {lat, long, destinationName, pickupLocation, fare, QR, user} =
@@ -66,6 +67,18 @@ const OfferCarpool = ({route, navigation}) => {
       .then(() => {
         console.log('Ride added to ride History');
       });
+    firestore()
+    .collection('ActiveCarpools')
+    .add({
+      currentFare: fare,
+      destination: new firestore.GeoPoint(lat,long),
+      maxPassengers: maxPassengers,
+      passengers: [user],
+      isFull: false,
+    })
+    .then( () => {
+      console.log('Added Carppol to active carpools');
+    });
   };
 
   useEffect(() => {
