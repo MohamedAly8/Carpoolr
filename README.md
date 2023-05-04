@@ -1,6 +1,19 @@
 # Carpoolr Ride Sharing App
 Carpoolr is a ride sharing app that connects users with similar destinations and interests to make commuting more enjoyable and eco-friendly. Our app offers a variety of features to ensure a safe and convenient ride sharing experience for our users.
 
+## Demo Pictures
+<div style="display: flex; justify-content: center; align-items: center;">
+  <div style="display: flex; flex-direction: column; margin-right: 20px;">
+    <img src="demo_pics/HomePage.png" style="margin-bottom: 10px;">
+    <img src="demo_pics/Request2.png">
+    
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <img src="demo_pics/Tour.png" style="margin-bottom: 10px;">
+    <img src="demo_pics/Offer.png">
+  </div>
+</div>
+
 
 
 <p align="center">
